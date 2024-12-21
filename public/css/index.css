@@ -6,92 +6,117 @@
 */
 
 @font-face {
-  font-family: 'Latin Modern';
+  font-family: 'Lucida Bright';
   font-style: normal;
   font-weight: normal;
   font-display: swap;
-  src: url('./fonts/LM-regular.woff2') format('woff2'),
-    url('./fonts/LM-regular.woff') format('woff'),
-    url('./fonts/LM-regular.ttf') format('truetype');
+  src: url('/fonts/LucidaBrightOT.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Latin Modern';
+  font-family: 'Lucida Bright';
   font-style: italic;
   font-weight: normal;
   font-display: swap;
-  src: url('./fonts/LM-italic.woff2') format('woff2'),
-    url('./fonts/LM-italic.woff') format('woff'),
-    url('./fonts/LM-italic.ttf') format('truetype');
+  src: url('/fonts/LucidaBrightOT-Italic.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Latin Modern';
+  font-family: 'Lucida Bright';
   font-style: normal;
   font-weight: bold;
   font-display: swap;
-  src: url('./fonts/LM-bold.woff2') format('woff2'),
-    url('./fonts/LM-bold.woff') format('woff'),
-    url('./fonts/LM-bold.ttf') format('truetype');
+  src: url('/fonts/LucidaBrightOT-Demi.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Latin Modern';
+  font-family: 'Lucida Bright';
   font-style: italic;
   font-weight: bold;
   font-display: swap;
-  src: url('./fonts/LM-bold-italic.woff2') format('woff2'),
-    url('./fonts/LM-bold-italic.woff') format('woff'),
-    url('./fonts/LM-bold-italic.ttf') format('truetype');
+  src: url('/fonts/LucidaBrightOT-DemiItalic.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Libertinus';
+  font-family: 'Lucida Sans';
   font-style: normal;
   font-weight: normal;
   font-display: swap;
-  src: url('./fonts/Libertinus-regular.woff2') format('woff2');
+  src: url('/fonts/LucidaSansOT.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Libertinus';
+  font-family: 'Lucida Sans';
   font-style: italic;
   font-weight: normal;
   font-display: swap;
-  src: url('./fonts/Libertinus-italic.woff2') format('woff2');
+  src: url('/fonts/LucidaSansOT-Italic.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Libertinus';
+  font-family: 'Lucida Sans';
   font-style: normal;
   font-weight: bold;
   font-display: swap;
-  src: url('./fonts/Libertinus-bold.woff2') format('woff2');
+  src: url('/fonts/LucidaSansOT-Demi.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Libertinus';
+  font-family: 'Lucida Sans';
   font-style: italic;
   font-weight: bold;
   font-display: swap;
-  src: url('./fonts/Libertinus-bold-italic.woff2') format('woff2');
+  src: url('/fonts/LucidaSansOT-DemiItalic.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Libertinus';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('./fonts/Libertinus-semibold.woff2') format('woff2');
+	font-family: 'Lucida Console';
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+	src: url('/fonts/LucidaConsoleDK.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Libertinus';
-  font-style: italic;
-  font-weight: 600;
-  font-display: swap;
-  src: url('./fonts/Libertinus-semibold-italic.woff2') format('woff2');
+	font-family: 'Lucida Console';
+	font-style: italic;
+	font-weight: normal;
+	font-display: swap;
+	src: url('/fonts/LucidaConsoleDK-Italic.woff2') format('woff2');
 }
+
+@font-face {
+	font-family: 'Lucida Console';
+	font-style: normal;
+	font-weight: bold;
+	font-display: swap;
+	src: url('/fonts/LucidaConsoleDK-Bold.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Lucida Console';
+	font-style: italic;
+	font-weight: bold;
+	font-display: swap;
+	src: url('/fonts/LucidaConsoleDK-BoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Lucida Math';
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+	src: url('/fonts/LucidaBrightMathOT.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Lucida Math';
+	font-style: normal;
+	font-weight: bold;
+	font-display: swap;
+	src: url('/fonts/LucidaBrightMathOT-Demi.woff2') format('woff2');
+}
+
 
 /* Box sizing rules */
 *,
@@ -177,12 +202,8 @@ html {
   }
 }
 
-body.libertinus {
-  font-family: 'Libertinus', Georgia, Cambria, 'Times New Roman', Times, serif;
-}
-
 body {
-  font-family: 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
+  font-family: 'Lucida Bright', Georgia, Cambria, 'Times New Roman', Times, serif;
   line-height: 1.8;
 
   max-width: 80ch;
@@ -197,6 +218,10 @@ body {
   background-color: var(--body-bg-color);
 
   text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6, h7, h8, h9 {
+  font-family: 'Lucida Sans', Helvetica, 'Trebuchet MS', sans-serif;
 }
 
 /* Justify and hyphenate all paragraphs */
@@ -274,7 +299,7 @@ article > * + * {
 code,
 pre,
 kbd {
-  font-family: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+  font-family: 'Lucida Console', Menlo, Monaco, Consolas, 'Courier New',
     monospace;
   font-size: 85%;
   hyphens: none;
