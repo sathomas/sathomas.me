@@ -4,6 +4,6 @@ const eleventyNavigation = {
 	order: 2
 };
 ---
-# About
+# A Quick Introduction
 
 I am a person that writes stuff.
