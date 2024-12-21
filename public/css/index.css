@@ -6,116 +6,93 @@
 */
 
 @font-face {
-  font-family: 'Lucida Bright';
+  font-family: 'Latin Modern';
   font-style: normal;
   font-weight: normal;
   font-display: swap;
-  src: url('/fonts/LucidaBrightOT.woff2') format('woff2');
+  src: url('/fonts/lmroman10-regular.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Lucida Bright';
+  font-family: 'Latin Modern';
   font-style: italic;
   font-weight: normal;
   font-display: swap;
-  src: url('/fonts/LucidaBrightOT-Italic.woff2') format('woff2');
+  src: url('/fonts/lmroman10-italic.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Lucida Bright';
+  font-family: 'Latin Modern';
   font-style: normal;
   font-weight: bold;
   font-display: swap;
-  src: url('/fonts/LucidaBrightOT-Demi.woff2') format('woff2');
+  src: url('/fonts/lmroman10-bold.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Lucida Bright';
+  font-family: 'Latin Modern';
   font-style: italic;
   font-weight: bold;
   font-display: swap;
-  src: url('/fonts/LucidaBrightOT-DemiItalic.woff2') format('woff2');
+  src: url('/fonts/lmroman10-bolditalic.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Lucida Sans';
+  font-family: 'Latin Modern Sans';
   font-style: normal;
   font-weight: normal;
   font-display: swap;
-  src: url('/fonts/LucidaSansOT.woff2') format('woff2');
+  src: url('/fonts/lmsans10-regular.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Lucida Sans';
+  font-family: 'Latin Modern Sans';
   font-style: italic;
   font-weight: normal;
   font-display: swap;
-  src: url('/fonts/LucidaSansOT-Italic.woff2') format('woff2');
+  src: url('/fonts/lmsans10-oblique.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Lucida Sans';
+  font-family: 'Latin Modern Sans';
   font-style: normal;
   font-weight: bold;
   font-display: swap;
-  src: url('/fonts/LucidaSansOT-Demi.woff2') format('woff2');
+  src: url('/fonts/lmsans10-bold.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'Lucida Sans';
+  font-family: 'Latin Modern Sans';
   font-style: italic;
   font-weight: bold;
   font-display: swap;
-  src: url('/fonts/LucidaSansOT-DemiItalic.woff2') format('woff2');
+  src: url('/fonts/lmsans10-boldoblique.woff2') format('woff2');
 }
 
 @font-face {
-	font-family: 'Lucida Console';
+	font-family: 'Latin Modern Mono';
 	font-style: normal;
 	font-weight: normal;
 	font-display: swap;
-	src: url('/fonts/LucidaConsoleDK.woff2') format('woff2');
+	src: url('/fonts/lmmono10-regular.woff2') format('woff2');
 }
 
 @font-face {
-	font-family: 'Lucida Console';
+	font-family: 'Latin Modern Mono';
 	font-style: italic;
 	font-weight: normal;
 	font-display: swap;
-	src: url('/fonts/LucidaConsoleDK-Italic.woff2') format('woff2');
+	src: url('/fonts/lmmono10-italic.woff2') format('woff2');
 }
 
 @font-face {
-	font-family: 'Lucida Console';
-	font-style: normal;
-	font-weight: bold;
-	font-display: swap;
-	src: url('/fonts/LucidaConsoleDK-Bold.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'Lucida Console';
-	font-style: italic;
-	font-weight: bold;
-	font-display: swap;
-	src: url('/fonts/LucidaConsoleDK-BoldItalic.woff2') format('woff2');
-}
-
-@font-face {
-	font-family: 'Lucida Math';
+	font-family: 'Latin Modern Math';
 	font-style: normal;
 	font-weight: normal;
 	font-display: swap;
-	src: url('/fonts/LucidaBrightMathOT.woff2') format('woff2');
+	src: url('/fonts/latinmodern-math.woff2') format('woff2');
 }
 
-@font-face {
-	font-family: 'Lucida Math';
-	font-style: normal;
-	font-weight: bold;
-	font-display: swap;
-	src: url('/fonts/LucidaBrightMathOT-Demi.woff2') format('woff2');
-}
 
 
 /* Box sizing rules */
@@ -203,7 +180,7 @@ html {
 }
 
 body {
-  font-family: 'Lucida Bright', Georgia, Cambria, 'Times New Roman', Times, serif;
+  font-family: 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
   line-height: 1.8;
 
   max-width: 80ch;
@@ -221,7 +198,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6, h7, h8, h9 {
-  font-family: 'Lucida Sans', Helvetica, 'Trebuchet MS', sans-serif;
+  font-family: 'Latin Modern Sans', Helvetica, 'Trebuchet MS', sans-serif;
 }
 
 /* Justify and hyphenate all paragraphs */
@@ -299,7 +276,7 @@ article > * + * {
 code,
 pre,
 kbd {
-  font-family: 'Lucida Console', Menlo, Monaco, Consolas, 'Courier New',
+  font-family: 'Latin Modern Mono', Menlo, Monaco, Consolas, 'Courier New',
     monospace;
   font-size: 85%;
   hyphens: none;
