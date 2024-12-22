@@ -209,6 +209,10 @@ p {
   margin-top: 1rem;
 }
 
+p:first-child {
+	margin-top: 0;
+}
+
 /* Indents paragraphs like in LaTeX documents*/
 .indent-pars p {
   text-indent: var(--text-indent-size);
@@ -286,6 +290,7 @@ pre {
   overflow: auto;
   border-radius: 4px;
   background: var(--pre-bg-color);
+	line-height: 1.5;
 }
 pre code {
   font-size: 95%;
@@ -459,7 +464,7 @@ figcaption::before {
 
 /* Center align the title */
 h1:first-child {
-  text-align: center;
+  /* text-align: center; */
 }
 
 /* Nested ordered list for ToC */
@@ -543,7 +548,7 @@ dl dd {
 .author {
   margin: 0.85rem 0;
   font-variant-caps: small-caps;
-  text-align: center;
+  /* text-align: center; */
 }
 
 /* Sidenotes */
@@ -654,7 +659,7 @@ input.sidenote-toggle {
 /* Center title and paragraph */
 .abstract,
 .abstract p {
-  text-align: center;
+  /* text-align: center; */
   margin-top: 0;
 }
 .abstract {
@@ -669,6 +674,10 @@ h1 {
   font-size: 1.7rem;
   line-height: 2rem;
   margin-bottom: 2rem;
+}
+
+h1:first-child {
+	margin-bottom: 0.5rem;
 }
 
 h2 {
