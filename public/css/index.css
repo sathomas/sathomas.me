@@ -118,7 +118,7 @@
   --text-indent-size: 1.17rem;
 }
 
-.latex-dark {
+.latex-dark, html:has(#dark-mode:checked) {
   --body-color: hsl(0, 0%, 86%);
   --body-bg-color: hsl(0, 0%, 16%);
   --link-visited: hsl(196 80% 77%);
@@ -133,7 +133,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-   .latex-dark-auto {
+  .latex-dark-auto {
     --body-color: hsl(0, 0%, 86%);
     --body-bg-color: hsl(0, 0%, 16%);
     --link-visited: hsl(196 80% 77%);
@@ -843,12 +843,32 @@ header {
 	margin-right: 1em;
 }
 
-
 .nav-name {
 	font-size: 1.5rem;
 	line-height: 1;
 	margin-top: 0;
 	margin-left: 1.5rem;
+}
+
+.mode-switch {
+	margin-left: auto;
+}
+
+.mode-switch label {
+	cursor: pointer;
+}
+
+.light-mode-hide {
+	display: none;
+}
+
+latex-dark, html:has(#dark-mode:checked) {
+	.dark-mode-hide {
+		display: none;
+	}
+	.light-mode-hide {
+		display: initial;
+	}
 }
 
 footer {

@@ -21,7 +21,7 @@
   --token-pink: #BA6687;
 }
 
-.latex-dark {
+.latex-dark, html:has(#dark-mode:checked) {
   --bg-color: #2d2d2d;
   --color: #ccc;
   --token-teal: #90D0D0;
