@@ -115,11 +115,7 @@
   --border-width-thick: 2.27px;
   --sidenote-target-border-color: hsl(55, 55%, 70%);
   --footnotes-border-color: hsl(0, 0%, 39%);
-  --text-indent-size: 1.463rem; /* In 12pt [Latin Modern font] LaTeX article
-  \parindent =~ 17.625pt; taking also into account the ratio
-  1pt[LaTeX] = (72 / 72.27) * 1pt[HTML], with default 12pt/1rem LaTeX.css font
-  size, the identation value in rem CSS units is:
-  \parindent =~ 17.625 * (72 / 72.27) / 12 = 1.463rem. */
+  --text-indent-size: 1.17rem;
 }
 
 .latex-dark {
@@ -169,10 +165,12 @@ dd {
   margin: 0;
 }
 
-/* Make default font-size 1rem and add smooth scrolling to anchors */
+/* Make default font-size 20px for easier reading */
 html {
-  font-size: 1rem;
+  font-size: 20px;
 }
+
+/* add smooth scrolling to anchors */
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
@@ -187,7 +185,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   margin: 0 auto;
-  padding: 2rem 1.25rem;
+  padding: 1.6rem 1rem;
 
   counter-reset: theorem definition sidenote-counter;
 
@@ -199,6 +197,7 @@ body {
 
 h1, h2, h3, h4, h5, h6, h7, h8, h9 {
   font-family: 'Latin Modern Sans', Helvetica, 'Trebuchet MS', sans-serif;
+  font-weight: normal;
 }
 
 /* Justify and hyphenate all paragraphs */
@@ -666,60 +665,35 @@ input.sidenote-toggle {
   margin-bottom: -0.2rem;
 }
 
-/* Format the LaTeX symbol correctly (a higher up, e lower) */
-.latex span:nth-child(1) {
-  text-transform: uppercase;
-  font-size: 0.75em;
-  vertical-align: 0.28em;
-  margin-left: -0.48em;
-  margin-right: -0.15em;
-  line-height: 1ex;
-}
-
-.latex span:nth-child(2) {
-  text-transform: uppercase;
-  vertical-align: -0.5ex;
-  margin-left: -0.1667em;
-  margin-right: -0.125em;
-  line-height: 1ex;
-}
-
-/* Heading typography */
 h1 {
-  font-size: 2.5rem;
-  line-height: 3.25rem;
-  margin-bottom: 1.625rem;
+  font-size: 1.7rem;
+  line-height: 2rem;
+  margin-bottom: 2rem;
 }
 
 h2 {
-  font-size: 1.7rem;
-  line-height: 2rem;
-  margin-top: 3rem;
-}
-
-h3 {
   font-size: 1.4rem;
   margin-top: 2.5rem;
 }
 
-h4 {
+h3 {
   font-size: 1.2rem;
   margin-top: 2rem;
 }
 
-h5 {
+h4 {
   font-size: 1rem;
   margin-top: 1.8rem;
 }
 
-h6 {
+h5 {
   font-size: 1rem;
   font-style: italic;
   font-weight: normal;
   margin-top: 2.5rem;
 }
 
-h3,
+h2,
 h4,
 h5,
 h6 {
