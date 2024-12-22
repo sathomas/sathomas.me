@@ -741,7 +741,7 @@ header {
 	gap: 1em .5em;
 	flex-wrap: wrap;
 	align-items: center;
-	padding: 1em;
+	padding-bottom: 1em;
 }
 .home-link {
 	font-size: 1em; /* 16px /16 */
