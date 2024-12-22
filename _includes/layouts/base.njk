@@ -39,7 +39,6 @@
 		<a href="#skip" class="visually-hidden">Skip to main content</a>
 
 		<header>
-			{#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
 			<nav>
 				<h2 class="visually-hidden">Top level navigation menu</h2>
 				<ul class="nav">
@@ -50,10 +49,34 @@
 		</header>
 
 		<main id="skip">
-			<heading-anchors>
-				{{ content | safe }}
-			</heading-anchors>
+			{{ content | safe }}
 		</main>
+
+		<footer>
+			<nav>
+				<h2 class="visually-hidden">Other ways to find or follow me</h2>
+				<ul class="nav">
+					<li class="nav-item"><a class="a--icon"href="/feed/feed.xml">
+						<span class="icon">{% svgIcon 'rss.svg' %}</span>
+					</a></li>
+					<li class="nav-item"><a class="a--icon"href="https://fediscience.org/@stephen_thomas">
+						<span class="icon">{% svgIcon 'mastodon.svg' %}</span>
+					</a></li>
+					<li class="nav-item"><a class="a--icon"href="https://github.com/sathomas">
+						<span class="icon">{% svgIcon 'github.svg' %}</span>
+					</a></li>
+					<li class="nav-item"><a class="a--icon"href="https://scholar.google.com/citations?hl=en&user=d8x-U-AAAAAJ&view_op=list_works&sortby=pubdate">
+						<span class="icon">{% svgIcon 'scholar.svg' %}</span>
+					</a></li>
+					<li class="nav-item"><a class="a--icon"href="https://amazon.com/author/sathomas">
+						<span class="icon">{% svgIcon 'amazon.svg' %}</span>
+					</a></li>
+					<li class="nav-item"><a class="a--icon" href="https://www.strava.com/athletes/4858512">
+						<span class="icon">{% svgIcon 'strava.svg' %}</span>
+					</a></li>
+				</ul>
+			</nav>
+		</footer>
 
 		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
 		<script type="module" src="{% getBundleFileUrl "js" %}"></script>

@@ -764,6 +764,7 @@ header {
 /* Nav */
 .nav {
 	display: flex;
+	gap: 0.75rem;
 	padding: 0;
 	margin: 0;
 	list-style: none;
@@ -844,4 +845,22 @@ header {
 }
 .post-metadata time {
 	margin-right: 1em;
+}
+
+footer {
+	margin-top: 3.5rem;
+}
+
+.a--icon, .a--icon:visited
+{
+	color: var(--body-color);
+}
+
+.a--icon:hover, .a--icon:active {
+	color: var(--link-visited);
+}
+
+.icon svg {
+	height: 1.5rem;
+	width: 1.5rem;
 }
