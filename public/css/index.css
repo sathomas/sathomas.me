@@ -750,7 +750,7 @@ header {
 	gap: 1em .5em;
 	flex-wrap: wrap;
 	align-items: center;
-	padding-bottom: 1em;
+	margin-bottom: 2rem;
 }
 .home-link {
 	font-size: 1em; /* 16px /16 */
@@ -764,20 +764,16 @@ header {
 /* Nav */
 .nav {
 	display: flex;
-	gap: 0.75rem;
+	gap: 1.75rem;
 	padding: 0;
 	margin: 0;
 	list-style: none;
 }
 .nav-item {
 	display: inline-block;
-	margin-right: 1em;
 }
-.nav-item a[href]:not(:hover) {
+.nav-item a {
 	text-decoration: none;
-}
-.nav a[href][aria-current="page"] {
-	text-decoration: underline;
 }
 
 /* Posts list */
@@ -847,6 +843,14 @@ header {
 	margin-right: 1em;
 }
 
+
+.nav-name {
+	font-size: 1.5rem;
+	line-height: 1;
+	margin-top: 0;
+	margin-left: 1.5rem;
+}
+
 footer {
 	margin-top: 3.5rem;
 }
@@ -860,7 +864,7 @@ footer {
 	color: var(--link-visited);
 }
 
-.icon svg {
+.icon, .icon svg {
 	height: 1.5rem;
 	width: 1.5rem;
 }
