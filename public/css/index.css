@@ -188,6 +188,7 @@ body {
 h1, h2, h3, h4, h5, h6, h7, h8, h9 {
   font-family: 'Latin Modern Sans', Helvetica, 'Trebuchet MS', sans-serif;
   font-weight: normal;
+  text-wrap: balance;
 }
 
 /* Justify and hyphenate all paragraphs */
@@ -439,11 +440,11 @@ table.borders-custom {
 /* Format figure captions (based on table captions) */
 figure {
   counter-increment: figcaption;
+	margin-top: 1rem;
 }
 figcaption {
   text-align: left;
-  font-size: 0.923em;
-  padding: 0.25em 0.25em 0;
+  font-size: 0.9rem;
   width: 100%;
   margin-left: 0;
 }
@@ -607,7 +608,6 @@ blockquote .sidenote {
 
 label.sidenote-toggle {
   display: inline;
-  cursor: pointer;
 }
 
 input.sidenote-toggle {
@@ -615,6 +615,9 @@ input.sidenote-toggle {
 }
 
 @media (max-width: 1050px) {
+	label.sidenote-toggle {
+		cursor: pointer;
+	}
   label.sidenote-toggle:not(.sidenote-number) {
     display: inline;
   }
