@@ -6,7 +6,7 @@
  * Licensed under MIT (https://github.com/vincentdoerig/latex-css/blob/master/LICENSE)
 */
 
-:root {
+html {
   --bg-color: #F0F0F0;
   --color: black;
   --token-teal: #407f80;
@@ -21,23 +21,23 @@
   --token-pink: #BA6687;
 }
 
-.latex-dark, html:has(#dark-mode:checked) {
-  --bg-color: #2d2d2d;
-  --color: #ccc;
-  --token-teal: #90D0D0;
-  --token-black: #ccc;
-  --token-grey: #999;
-  --token-green: #51B53F;
-  --token-lime: #B4C55D;
-  --token-brown: #D3A26B;
-  --token-red: #FA5E4F;
-  --token-fuchsia: #FF839B;
-  --token-orange: #FFCF4C;
-  --token-pink: #F49BBC;
+html:has(#dark-mode:checked) {
+	--bg-color: #2d2d2d;
+	--color: #ccc;
+	--token-teal: #90D0D0;
+	--token-black: #ccc;
+	--token-grey: #999;
+	--token-green: #51B53F;
+	--token-lime: #B4C55D;
+	--token-brown: #D3A26B;
+	--token-red: #FA5E4F;
+	--token-fuchsia: #FF839B;
+	--token-orange: #FFCF4C;
+	--token-pink: #F49BBC;
 }
 
 @media (prefers-color-scheme: dark) {
-  .latex-dark-auto {
+  html:not(:has(#dark-mode)) {
     --bg-color: #2d2d2d;
     --color: #ccc;
     --token-teal: #90D0D0;

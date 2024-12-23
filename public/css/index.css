@@ -92,7 +92,7 @@
   box-sizing: border-box;
 }
 
-:root {
+html {
   --body-color: hsl(0, 5%, 10%);
   --body-bg-color: hsl(210, 20%, 98%);
   --link-visited: hsl(0, 100%, 33%);
@@ -108,34 +108,34 @@
   --text-indent-size: 1.17rem;
 }
 
-.latex-dark, html:has(#dark-mode:checked) {
-  --body-color: hsl(0, 0%, 86%);
-  --body-bg-color: hsl(0, 0%, 16%);
-  --link-visited: hsl(196 80% 77%);
-  --link-focus-outline: hsl(215, 63%, 73%);
-  --pre-bg-color: hsl(0, 1%, 25%);
-  --kbd-bg-color: hsl(0, 0%, 16%);
-  --kbd-border-color: hsl(210, 5%, 70%);
-  --table-border-color: white;
-  --sidenote-target-border-color: hsl(0, 0%, 59%);
-  --footnotes-border-color: hsl(0, 0%, 59%);
-  --proof-symbol-filter: invert(80%);
+html:has(#dark-mode:checked) {
+	--body-color: hsl(0, 0%, 86%);
+	--body-bg-color: hsl(0, 0%, 16%);
+	--link-visited: hsl(196 80% 77%);
+	--link-focus-outline: hsl(215, 63%, 73%);
+	--pre-bg-color: hsl(0, 1%, 25%);
+	--kbd-bg-color: hsl(0, 0%, 16%);
+	--kbd-border-color: hsl(210, 5%, 70%);
+	--table-border-color: white;
+	--sidenote-target-border-color: hsl(0, 0%, 59%);
+	--footnotes-border-color: hsl(0, 0%, 59%);
+	--proof-symbol-filter: invert(80%);
 }
 
 @media (prefers-color-scheme: dark) {
-  .latex-dark-auto {
-    --body-color: hsl(0, 0%, 86%);
-    --body-bg-color: hsl(0, 0%, 16%);
-    --link-visited: hsl(196 80% 77%);
-    --link-focus-outline: hsl(215, 63%, 73%);
-    --pre-bg-color: hsl(0, 1%, 25%);
-    --kbd-bg-color: hsl(0, 0%, 16%);
-    --kbd-border-color: hsl(210, 5%, 70%);
-    --table-border-color: white;
-    --sidenote-target-border-color: hsl(0, 0%, 59%);
-    --footnotes-border-color: hsl(0, 0%, 59%);
-    --proof-symbol-filter: invert(80%);
-  }
+	html:not(:has(#dark-mode)) {
+		--body-color: hsl(0, 0%, 86%);
+		--body-bg-color: hsl(0, 0%, 16%);
+		--link-visited: hsl(196 80% 77%);
+		--link-focus-outline: hsl(215, 63%, 73%);
+		--pre-bg-color: hsl(0, 1%, 25%);
+		--kbd-bg-color: hsl(0, 0%, 16%);
+		--kbd-border-color: hsl(210, 5%, 70%);
+		--table-border-color: white;
+		--sidenote-target-border-color: hsl(0, 0%, 59%);
+		--footnotes-border-color: hsl(0, 0%, 59%);
+		--proof-symbol-filter: invert(80%);
+	}
 }
 
 /* Remove default margin */
@@ -850,15 +850,43 @@ header {
 }
 
 .light-mode-hide {
-	display: none;
+	display: none
 }
 
-latex-dark, html:has(#dark-mode:checked) {
+html:has(#dark-mode:checked) {
 	.dark-mode-hide {
 		display: none;
 	}
 	.light-mode-hide {
 		display: initial;
+	}
+}
+
+/* Figures with two images are light/dark mode versions. Note
+   that the <img> element is encapsulated in a <p> by 11ty
+ */
+
+figure:has(p:nth-child(2)) > p:nth-child(2) {
+	display: none;
+}
+
+html:has(#dark-mode:checked) {
+	figure:has(p:nth-child(2)) > p:nth-child(1) {
+		display: none;
+	}
+	figure:has(p:nth-child(2)) > p:nth-child(2) {
+		display: block;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	html:not(:has(#dark-mode)) {
+		figure:has(p:nth-child(2)) > p:nth-child(1) {
+			display: none;
+		}
+		figure:has(p:nth-child(2)) > p:nth-child(2) {
+			display: block;
+		}
 	}
 }
 

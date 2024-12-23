@@ -51,6 +51,7 @@
 				</ul>
 			</nav>
 			<h2 class="nav-name">Stephen Thomas</h2>
+			{% if darkmode %}
 			<span class="mode-switch">
 				<input id="dark-mode" type="checkbox" name="dark-mode" hidden="true">
 				<label for="dark-mode">
@@ -61,6 +62,7 @@
 						<span class="icon">{% svgIcon 'light_mode.svg' %}</span>
 					</span>
 				</label>
+				{% endif %}
 			</span>
 		</header>
 
