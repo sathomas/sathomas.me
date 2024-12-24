@@ -866,7 +866,9 @@ html:has(#dark-mode:checked) {
 }
 
 /* Figures with two images are light/dark mode versions. Note
-   that the <img> element is encapsulated in a <p> by 11ty
+   that the <img> element is encapsulated in a <p> by 11ty.
+   If there's only one image (e.g. a photograph) adjust the
+   brightness.
  */
 
 figure:has(p:nth-child(2)) > p:nth-child(2) {
@@ -880,6 +882,9 @@ html:has(#dark-mode:checked) {
 	figure:has(p:nth-child(2)) > p:nth-child(2) {
 		display: block;
 	}
+	figure p:only-of-type img {
+		filter: brightness(.8) contrast(1.2);
+	}
 }
 
 @media (prefers-color-scheme: dark) {
@@ -889,6 +894,9 @@ html:has(#dark-mode:checked) {
 		}
 		figure:has(p:nth-child(2)) > p:nth-child(2) {
 			display: block;
+		}
+		figure p:only-of-type img {
+			filter: brightness(.8) contrast(1.2);
 		}
 	}
 }
