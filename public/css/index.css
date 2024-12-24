@@ -865,6 +865,22 @@ html:has(#dark-mode:checked) {
 	}
 }
 
+/* Equation numbering */
+.tml-block {
+	position: relative;
+}
+.tml-block::after {
+	counter-increment: EqnNo;
+	content: "(" counter(EqnNo) ")";
+	position: absolute;
+	right: 0;
+	top: calc(50% - 1em);
+}
+
+body {
+	counter-reset: EqnNo;
+}
+
 /* Figures with two images are light/dark mode versions. Note
    that the <img> element is encapsulated in a <p> by 11ty.
    If there's only one image (e.g. a photograph) adjust the
