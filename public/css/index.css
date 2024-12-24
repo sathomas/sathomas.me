@@ -38,6 +38,24 @@
 }
 
 @font-face {
+	font-family: 'Latin Modern Small Caps';
+	font-style: normal;
+	font-weight: normal;
+	font-feature-settings: "smcp";
+	font-display: swap;
+	src: url('/fonts/lmromancaps10-regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Latin Modern Small Caps';
+	font-style: italic;
+	font-weight: normal;
+	font-feature-settings: "smcp";
+	font-display: swap;
+	src: url('/fonts/lmromancaps10-oblique.woff2') format('woff2');
+}
+
+@font-face {
   font-family: 'Latin Modern Sans';
   font-style: normal;
   font-weight: normal;
@@ -447,6 +465,7 @@ figcaption {
   font-size: 0.9rem;
   width: 100%;
   margin-left: 0;
+  line-height: 1.3;
 }
 figcaption::before {
   content: 'Figure ' counter(figcaption) '. ';
@@ -933,4 +952,10 @@ footer {
 .icon, .icon svg {
 	height: 1.5rem;
 	width: 1.5rem;
+}
+
+abbr {
+	font-family: 'Latin Modern Small Caps', 'Latin Modern', Georgia, Cambria, 'Times New Roman', Times, serif;
+	font-variant: small-caps;
+	text-transform: lowercase;
 }
