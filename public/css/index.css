@@ -195,7 +195,7 @@ body {
   margin: 0 auto;
   padding: 1.6rem 1rem;
 
-  counter-reset: theorem definition sidenote-counter;
+  counter-reset: theorem definition sidenote-counter equation;
 
   color: var(--body-color);
   background-color: var(--body-bg-color);
@@ -889,15 +889,11 @@ html:has(#dark-mode:checked) {
 	position: relative;
 }
 .tml-block::after {
-	counter-increment: EqnNo;
-	content: "(" counter(EqnNo) ")";
+	counter-increment: equation;
+	content: "(" counter(equation) ")";
 	position: absolute;
 	right: 0;
 	top: calc(50% - 1em);
-}
-
-body {
-	counter-reset: EqnNo;
 }
 
 /* Figures with two images are light/dark mode versions. Note
