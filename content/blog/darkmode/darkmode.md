@@ -2,7 +2,7 @@
 title: Dark Mode Support
 description: How dark mode works on this sige
 date: 2025-01-15
-tags: site
+tags: [site, python]
 darkmode: true
 ---
 Those of you who like to read at night may have noticed that this site has a dark mode. Most pages use dark mode automatically following the lead of your computer’s operating system. When your computer switches to dark mode, the pages change with it. This particular page works differently. The button in the upper right corner lets you manually switch between light and dark mode; it’s there to make it easier to compare the two.
