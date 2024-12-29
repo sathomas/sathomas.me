@@ -43,6 +43,9 @@
 		"@traeblain/markdown-it-temml": "^1.0.1",
 		"cross-env": "^7.0.3",
 		"luxon": "^3.5.0",
+		"markdown-it-sub": "^2.0.0",
+		"markdown-it-sup": "^2.0.0",
+		"markdown-it-table-captions": "^1.0.4",
 		"zod": "^3.23.8",
 		"zod-validation-error": "^3.3.1"
 	},

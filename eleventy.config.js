@@ -6,6 +6,9 @@ import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import Image from "@11ty/eleventy-img";
 
 import tml_plugin from '@traeblain/markdown-it-temml'
+import sub_plugin from 'markdown-it-sub'
+import sup_plugin from 'markdown-it-sup'
+import tcap_plugin from 'markdown-it-table-captions'
 
 import pluginFilters from "./_config/filters.js";
 
@@ -122,6 +125,9 @@ export default async function(eleventyConfig) {
 	// eleventyConfig.setServerPassthroughCopyBehavior("passthrough");
 
 	eleventyConfig.amendLibrary("md", (mdLib) => mdLib.use(tml_plugin));
+	eleventyConfig.amendLibrary("md", (mdLib) => mdLib.use(sub_plugin));
+	eleventyConfig.amendLibrary("md", (mdLib) => mdLib.use(sup_plugin));
+	eleventyConfig.amendLibrary("md", (mdLib) => mdLib.use(tcap_plugin));
 };
 
 export const config = {
