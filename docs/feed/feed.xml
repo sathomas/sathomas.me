@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="pretty-atom-feed.xsl" type="text/xsl"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>Stephen Thomas</title>
+  <subtitle>Musing about mathematics, biology, and other stuff.</subtitle>
+  <link href="https://sathomas.me/feed/feed.xml" rel="self" />
+  <link href="https://sathomas.me/" />
+  <updated>2025-01-01T00:00:00Z</updated>
+  <id>https://sathomas.me/</id>
+  <author>
+    <name>Stephen Thomas</name>
+  </author>
+  <entry>
+    <title>Hello again, world</title>
+    <link href="https://sathomas.me/blog/hello/" />
+    <updated>2025-01-01T00:00:00Z</updated>
+    <id>https://sathomas.me/blog/hello/</id>
+    <content type="html">&lt;p&gt;It&#39;s been way more than a minute, long enough to wonder if I can still write a decent blog post. After all, a lot can change in nearly a decade. Still, I have been thinking about writing again, and a &lt;a href=&quot;https://pluralistic.net/2024/12/21/blockheads-r-us/&quot;&gt;blog post&lt;/a&gt; from Cory Doctorow finally helped me overcome my intertia. Cory says that “&lt;a href=&quot;https://pluralistic.net/2024/12/21/blockheads-r-us/#:~:text=Writing%20is%20a%20cognitive%20prosthesis%20for%20me.%20Working%20things%20out%20on%20the%20page%20helps%20me%20work%20things%20out%20in%20my%20life.&quot;&gt;Writing is a cognitive prosthesis for me. Working things out on the page helps me work things out in my life.&lt;/a&gt;” That’s close to how I feel. For me, it’s only when I can write about a topic that I have confidence that I understand it. And since I love trying to figure things out, I’m going to have to write. To me the most relatable sentence in Cory’s piece is “&lt;a href=&quot;https://pluralistic.net/2024/12/21/blockheads-r-us/#:~:text=the%20very%20act%20of%20writing%20is%20so%20important%20to%20me%20that%20even%20if%20no%20one%20read%20me%2C%20I%20would%20still%20write.&quot;&gt;[T]he &lt;em&gt;very act&lt;/em&gt; of writing is so important to me that even if no one read me, I would still write.&lt;/a&gt;”&lt;/p&gt;
+&lt;p&gt;So I’m going to start again. And if you, dear reader, find the articles interesting, I hope you’ll join me. At this point I can’t commit to a specific schedule, but I’m sure it won’t be frequent enough to feel like spam. On the other hand, I do have enough ideas in mind to establish some momentum. So check back when you can; see if you find something you like, and feel free to &lt;a href=&quot;mailto:stephen@sathomas.me&quot;&gt;let me know&lt;/a&gt; how I’m doing.&lt;/p&gt;
+</content>
+  </entry>
+</feed>

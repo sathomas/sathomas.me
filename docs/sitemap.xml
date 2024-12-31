@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+	
+	<url>
+		<loc>https://sathomas.me/about/</loc>
+		<lastmod>2024-12-19</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://sathomas.me/tags/</loc>
+		<lastmod>2024-12-19</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://sathomas.me/</loc>
+		<lastmod>2024-12-20</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://sathomas.me/feed/feed.xml</loc>
+		<lastmod>2024-12-31</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://sathomas.me/blog/hello/</loc>
+		<lastmod>2025-01-01</lastmod>
+	</url>
+</urlset>
