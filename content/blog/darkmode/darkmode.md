@@ -2,6 +2,7 @@
 title: Dark Mode Support
 description: How dark mode works on this sige
 date: 2025-01-15
+draft: true
 tags: [site, python]
 darkmode: true
 ---
@@ -17,53 +18,15 @@ There’s nothing special about most of the implementation, so I won’t bore yo
 
 </figure>
 
-Charts and plots provide more control and flexibility, so I can create optimized light and dark mode versions. Here’s a light mode example.
-
-```python
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-df = sns.load_dataset("anscombe")
-sns.set(style="ticks", context="talk")
-sns.lmplot(
-    x="x",
-    y="y",
-    col="dataset",
-    hue="dataset",
-    data=df,
-    col_wrap=2,
-    ci=None,
-    palette="dark",
-    scatter_kws={"s": 50, "alpha": 1},
-)
-```
-
-The dark mode version uses different chart styles.
-
-```python
-plt.style.use("dark_background")
-sns.lmplot(
-    x="x",
-    y="y",
-    col="dataset",
-    hue="dataset",
-    data=df,
-    col_wrap=2,
-    ci=None,
-    palette="pastel",
-    scatter_kws={"s": 50, "alpha": 1},
-)
-```
-
-The web page includes both images, but only one is visible at a time. Switching to and from dark mode changes which image becomes visible.
+Charts and plots provide more control and flexibility, so I can create optimized light and dark mode versions using different chart styles. The web page includes both images, but only one is visible at a time. Switching to and from dark mode changes which image becomes visible.
 
 <figure>
 
-![Charts of Anscombe’s Quartet](light.png)
+![Sample chart in light mode](light.png)
 
-![Chart of Anscombe’s Quartet](dark.png)
+![Sample chart in dark mode](dark.png)
 
-<figcaption>Charts of Anscombe’s Quartet.</figcaption>
+<figcaption>Sample chart to illustrate the differences between light and dark mode.</figcaption>
 
 </figure>
 

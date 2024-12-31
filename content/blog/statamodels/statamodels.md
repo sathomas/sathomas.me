@@ -38,7 +38,7 @@ data {
         real beta;
         real<lower=.5, upper= 1> lamda;
         real<lower=0> sigma;
-    } 
+    }
     transformed parameters {
         array[N] real m;
         for (i in 1:N)
@@ -50,7 +50,7 @@ data {
         beta  ~ normal(0.0, 1000);
         lamda ~ uniform(0.5, 1);
         sigma ~ inv_gamma(0.01, 0.01);
-    
+
         // likelihood
         y ~ normal(m, sigma);
     }
@@ -83,20 +83,20 @@ quietly {
          8.5  2.26
          9    2.4
          9.5  2.39
-         9.5  2.41 
+         9.5  2.41
         10    2.5
-        12    2.32 
-        12    2.32  
+        12    2.32
+        12    2.32
         13    2.43
-        13    2.47 
+        13    2.47
         14.5  2.56
-        15.5  2.65   
+        15.5  2.65
         15.5  2.47
         16.5  2.64
         17    2.56
         22.5  2.7
         29    2.72
-        31.5  2.57     
+        31.5  2.57
     end
 }
 ```
@@ -333,34 +333,40 @@ Thankfully, all of the different modeling approaches yield similar results, as t
 | `ml` program         | 2.65              | 0.96              | 0.87              |
 
 ```stata
-set scheme s1rcolor //light: s1color, dark: s1rcolor
-graph set window fontface "Latin Modern Sans"
-
-// CI color: light: gs10%25, dark: gs10%50
-// Posterior: light: gs12%10, dark: s12%05
+gr_setscheme
+local color1 `.__SCHEME.color.p1'
+local color2 `.__SCHEME.color.p2'
+local color3 `.__SCHEME.color.p3'
+local color4 `.__SCHEME.color.p4'
+local color5 `.__SCHEME.color.p5'
+local color6 `.__SCHEME.color.p6'
+local ciarea `.__SCHEME.color.ci_area'
+local ciline `.__SCHEME.color.ci_line'
 
 // One plot for each method separately to highlight that method's unique
 // features, and then a combined plot to allow comparison of the results.
 
 // Non-linear Least Squares - include confidence interval
 twoway ///
-    (rarea low_nl high_nl x, fcolor(gs10%25) lwidth(none)) ///
-    (function y = (`alpha_nl' - `beta_nl' * `lamda_nl' ^ x),  range(x)) ///
-    (scatter y x), ///
+    (rarea low_nl high_nl x, fcolor("`ciarea'") lwidth(none)) ///
+    (function y = (`alpha_nl' - `beta_nl' * `lamda_nl' ^ x),  ///
+        range(x) lcolor("`color3'") lwidth(1)) ///
+    (scatter y x, mcolor("`color1'")), ///
     legend(off) ///
-    title("Non-linear Least Squares", size(8pt) position(12) ring(0)) ///
-    subtitle("w/ 95% CI", size(6pt) position(5) ring(0)) ///
+    title("Non-linear Least Squares", size(11pt) position(12) ring(0)) ///
+    subtitle("w/ 95% CI", size(10pt) position(5) ring(0)) ///
     xtitle("") xlabel(none) ytitle("") ylabel(none) ///
     name(nl, replace) nodraw
 
 // Maximum Likelihood - also with confidence interval
 twoway ///
-    (rarea low_ml high_ml x, fcolor(gs10%25) lwidth(none)) ///
-    (function y = (`alpha_ml' - `beta_ml' * `lamda_ml' ^ x),  range(x)) ///
-    (scatter y x), ///
+    (rarea low_ml high_ml x, fcolor("`ciarea'") lwidth(none)) ///
+    (function y = (`alpha_ml' - `beta_ml' * `lamda_ml' ^ x),  ///
+        range(x) lcolor("`color4'") lwidth(1)) ///
+    (scatter y x, mcolor("`color1'")), ///
     legend(off) ///
-    title("Maximim Likelihood", size(8pt) position(12) ring(0)) ///
-    subtitle("w/ 95% CI", size(6pt) position(5) ring(0)) ///
+    title("Maximum Likelihood", size(11pt) position(12) ring(0)) ///
+    subtitle("w/ 95% CI", size(10pt) position(5) ring(0)) ///
     xtitle("") xlabel(none) ytitle("") ylabel(none) ///
     name(ml, replace) nodraw
 
@@ -371,33 +377,37 @@ forvalues sample = 1/500 {
     local b = _frval(`posterior', beta,  `i')
     local l = _frval(`posterior', lamda, `i')
     local graph = "`graph' (function y = (`a' - `b' * `l' ^ x),"
-    local graph = "`graph' range(x) lwidth(thin) lcolor(gs12%10))"
+    local graph = "`graph' range(x) lwidth(thin) lcolor(`ciline'%05))"
 }
 
 twoway ///
     `graph' ///
-    (function y = (`alpha_bs' - `beta_bs' * `lamda_bs' ^ x),  range(x)) ///
-    (scatter y x), ///
+    (function y = (`alpha_bs' - `beta_bs' * `lamda_bs' ^ x),  ///
+        range(x) lcolor("`color5'") lwidth(1)) ///
+    (scatter y x, mcolor("`color1'")), ///
     legend(off) ///
-    title("Bayesian (MCMC)", size(8pt) position(12) ring(0)) ///
-    subtitle("w/ 500 posterior samples", size(6pt) position(5) ring(0)) ///
+    title("Bayesian (MCMC)", size(11pt) position(12) ring(0)) ///
+    subtitle("w/ 500 posterior samples", size(10pt) position(5) ring(0)) ///
     xtitle("") xlabel(none) ytitle("") ylabel(none) ///
     name(bayes, replace) nodraw
 
 // Summarized results on single plot - using mean values for parameters
 twoway ///
-    (function y = (`alpha_nl' - `beta_nl' * `lamda_nl' ^ x),  range(x)) ///
-    (function y = (`alpha_ml' - `beta_ml' * `lamda_ml' ^ x),  range(x)) ///
-    (function y = (`alpha_bs' - `beta_bs' * `lamda_bs' ^ x),  range(x)) ///
-    (scatter y x), ///
-    subtitle("Mean Estimates", size(8pt) position(12) ring(0)) ///
+    (function y = (`alpha_nl' - `beta_nl' * `lamda_nl' ^ x),  ///
+        range(x) lcolor("`color3'") lwidth(1)) ///
+    (function y = (`alpha_ml' - `beta_ml' * `lamda_ml' ^ x),  ///
+        range(x) lcolor("`color4'") lwidth(1)) ///
+    (function y = (`alpha_bs' - `beta_bs' * `lamda_bs' ^ x),  ///
+        range(x) lcolor("`color5'") lwidth(1)) ///
+    (scatter y x, mcolor("`color1'")), ///
+    subtitle("Mean Estimates", size(11pt) position(12) ring(0)) ///
     legend(order( ///
         4 "Observations" ///
         1 "Non-linear Least Squares" ///
         2 "Maximum Likelihood" ///
         3 "Bayesian (MCMC)" ///
     ) ///
-    rowgap(0) keygap(1) symxsize(9) size(6pt) region(margin(small)) ///
+    rowgap(0) keygap(1) symxsize(9) size(8pt) region(margin(small)) ///
     cols(1) position(5) ring(0)) ///
     xtitle("") xlabel(none) ytitle("") ylabel(none) ///
     name(all, replace) nodraw
