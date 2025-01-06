@@ -1,7 +1,7 @@
 ---
 title: Dark Mode Support
 description: How dark mode works on this sige
-date: 2025-01-15
+date: 2025-01-13
 draft: true
 tags: [site, python]
 darkmode: true

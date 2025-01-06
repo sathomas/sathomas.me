@@ -1,7 +1,7 @@
 ---
 title: Modeling with Stata
 description: A simple example demonstrating various model approaches available in Stata
-date: 2025-01-22
+date: 2025-01-20
 draft: true
 tags: [software, stata, statistics, bayes]
 ---
