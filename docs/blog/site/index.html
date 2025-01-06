@@ -3,16 +3,420 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Tagged &#39;python&#39;</title>
+		<title>How the Site is Built</title>
 		<link rel="icon" href="/favicon.ico" sizes="32x32">
 		<link rel="icon" href="/icon.svg" type="image/svg+xml">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-		<meta name="description" content="Miscellaneous musings of a quantitative biologist and software engineer.">
+		<meta name="description" content="The applications, utilities, and libraries I use for the site">
 		<link rel="alternate" href="feed/feed.xml" type="application/atom+xml" title="Stephen Thomas">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="generator" content="Eleventy v3.0.0">
 		
-		<style>.postlist { counter-reset: start-from 1 }
+		<style>/*!
+ * LaTeX prism.css (https://latex.vercel.app/#syntax-highlighting)
+ * Based on the default prism.js theme for JavaScript, CSS and HTML by Lea Verou
+ *
+ * Source: https://github.com/vincentdoerig/latex-css/tree/master/prism
+ * Licensed under MIT (https://github.com/vincentdoerig/latex-css/blob/master/LICENSE)
+*/
+
+html {
+  --bg-color: #F0F0F0;
+  --color: black;
+  --token-teal: #407f80;
+  --token-black: #000000;
+  --token-grey: #666666;
+  --token-green: #007f00;
+  --token-lime: #7d8f29;
+  --token-brown: #9a6e3a;
+  --token-red: #ba2121;
+  --token-fuchsia: #dd4a68;
+  --token-orange: #e90;
+  --token-pink: #BA6687;
+}
+
+html:has(#dark-mode:checked) {
+	--bg-color: #2d2d2d;
+	--color: #ccc;
+	--token-teal: #90D0D0;
+	--token-black: #ccc;
+	--token-grey: #999;
+	--token-green: #51B53F;
+	--token-lime: #B4C55D;
+	--token-brown: #D3A26B;
+	--token-red: #FA5E4F;
+	--token-fuchsia: #FF839B;
+	--token-orange: #FFCF4C;
+	--token-pink: #F49BBC;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(:has(#dark-mode)) {
+    --bg-color: #2d2d2d;
+    --color: #ccc;
+    --token-teal: #90D0D0;
+    --token-black: #ccc;
+    --token-grey: #999;
+    --token-green: #51B53F;
+    --token-lime: #B4C55D;
+    --token-brown: #D3A26B;
+    --token-red: #FA5E4F;
+    --token-fuchsia: #FF839B;
+    --token-orange: #FFCF4C;
+    --token-pink: #F49BBC;
+  }
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  color: var(--color);
+  background: none;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+
+/* Code blocks */
+pre[class*='language-'] {
+  padding: 1em;
+  overflow: auto;
+}
+
+pre[class*='language-'] {
+  background: var(--bg-color);
+}
+
+/* Inline code */
+:not(pre) > code[class*='language-'] {
+  padding: 0.1em;
+  border-radius: 0.3em;
+  white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--token-teal);
+}
+
+.token.punctuation,
+.token.constant {
+  color: var(--token-black);
+}
+
+.token.punctuation.attr-equals,
+.token.number,
+.token.operator {
+  color: var(--token-grey);
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.symbol,
+.token.deleted,
+.token.keyword {
+  color: var(--token-green);
+}
+
+.token.selector,
+.token.attr-name,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: var(--token-lime);
+}
+
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: var(--token-brown);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.string,
+.token.attr-value .punctuation:not(.attr-equals) {
+  color: var(--token-red);
+}
+
+.token.class-name {
+  color: var(--token-fuchsia);
+}
+
+.token.important,
+.token.variable {
+  color: var(--token-orange);
+}
+
+.token.regex {
+  color: var(--token-pink);
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+
+@font-face {
+  font-family: 'Temml';
+  src: url('temml.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: 'Latin Modern Math';
+	src: url('/fonts/latinmodern-math.woff2') format('woff2');
+}
+
+math {
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  font-size-adjust: none;
+  text-indent: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  direction: ltr;
+  /* Prevent Firefox from omitting the dot on i or j. */
+  font-feature-settings: "dtls" off;
+}
+
+math * {
+  border-color: currentColor;
+}
+
+math {
+  font-family: "Latin Modern Math", math;
+}
+
+/* Next line is active in Firefox and Safari.
+ * Not in Chromium, which recognizes display: "block math" written inline. */
+math.tml-display { display: block; }
+
+*.mathscr {
+  font-family: "Temml";
+}
+
+/* Chromium prime alignment */
+mo.tml-prime {
+  font-family: Temml;
+}
+
+/* Prevent f' from overlapping in Chromium */
+mo.prime-pad {
+  padding-left: 0.08em;
+}
+
+/* \cancel & \phase use background images. Get them to print. */
+menclose {
+  -webkit-print-color-adjust: exact;  /* Chrome & Edge */
+          print-color-adjust: exact;
+}
+
+/* Array cell justification in Firefox & WebKit */
+.tml-right {
+  text-align: right;
+}
+.tml-left {
+  text-align: left;
+}
+
+/* Styles for Chromium only */
+@supports (not (-webkit-backdrop-filter: blur(1px))) and (not (-moz-appearance: none)) {
+  /* MathML Core & Chromium do not support the MathML 3.0 element <menclose> attributes. */
+  /* So use styles. */
+  menclose {
+    position: relative;
+    padding: 0.5ex 0ex;
+  }
+
+    .tml-overline {
+    padding: 0.1em 0 0 0;
+    border-top: 0.065em solid;
+  }
+
+  .tml-underline {
+    padding: 0 0 0.1em 0;
+    border-bottom: 0.065em solid;
+  }
+
+  .tml-cancel {
+    display: inline-block;
+    position: absolute;
+    left: 0.5px;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: currentColor;
+  }
+  .upstrike {
+    clip-path: polygon(0.05em 100%, 0em calc(100% - 0.05em), calc(100% - 0.05em) 0em, 100% 0.05em);
+  }
+  .downstrike {
+    clip-path: polygon(0em 0.05em, 0.05em 0em, 100% calc(100% - 0.05em), calc(100% - 0.05em) 100%);
+  }
+  .sout {
+    clip-path: polygon(0em calc(55% + 0.0333em), 0em calc(55% - 0.0333em), 100% calc(55% - 0.0333em), 100% calc(55% + 0.0333em));
+  }
+  .tml-xcancel {
+    background: linear-gradient(to top left,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0) calc(50% - 0.06em),
+    rgba(0,0,0,1) 50%,
+    rgba(0,0,0,0) calc(50% + 0.06em),
+    rgba(0,0,0,0) 100%),
+    linear-gradient(to top right,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0) calc(50% - 0.06em),
+    rgba(0,0,0,1) 50%,
+    rgba(0,0,0,0) calc(50% + 0.06em),
+    rgba(0,0,0,0) 100%)
+  }
+
+  .longdiv-top {
+    border-top: 0.067em solid;
+    padding: 0.1em 0.2em 0.2em 0.433em;
+  }
+  .longdiv-arc {
+    position: absolute;
+    top: 0;
+    bottom: 0.1em;
+    left: -0.4em;
+    width: 0.7em;
+    border: 0.067em solid;
+    transform: translateY(-0.067em);
+    border-radius: 70%;
+    clip-path: inset(0 0 0 0.4em);
+    box-sizing: border-box;}
+    .menclose {display: inline-block;
+    text-align: left;
+    position: relative;
+  }
+
+  .phasor-bottom {
+    border-bottom: 0.067em solid;
+    padding: 0.2em 0.2em 0.1em 0.6em;
+  }
+  .phasor-angle {
+    display: inline-block;
+    position: absolute;
+    left: 0.5px;
+    bottom: -0.04em;
+    height: 100%;
+    aspect-ratio: 0.5;
+    background-color: currentColor;
+    clip-path: polygon(0.05em 100%, 0em calc(100% - 0.05em), calc(100% - 0.05em) 0em, 100% 0.05em);
+  }
+
+  .tml-box {
+    padding: 3pt 0 3pt 0;
+    border: 1px solid;
+  }
+  .tml-fbox {
+    padding: 3pt;
+    border: 1px solid;
+  }
+
+  .circle-pad {
+    padding: 0.267em;
+  }
+  .textcircle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border: 0.067em solid;
+    border-radius: 50%;
+   }
+
+   .actuarial {
+    padding: 0.03889em 0.03889em 0 0.03889em;
+    border-width: 0.08em 0.08em 0em 0em;
+    border-style: solid;
+    margin-right: 0.03889em;
+   }
+
+   /* Stretch \widetilde */
+  .tml-crooked-2 {
+    transform: scale(2.0, 1.1)
+  }
+  .tml-crooked-3 {
+    transform: scale(3.0, 1.3)
+  }
+  .tml-crooked-4 {
+    transform: scale(4.0, 1.4)
+  }
+  /* set array cell justification */
+  .tml-right {
+    text-align: -webkit-right;
+  }
+  .tml-left {
+    text-align: -webkit-left;
+  }
+}
+
+/* Adjust WebKit accents */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .tml-xshift { transform: translate(0px, 0.45em) }
+  .tml-capshift { transform: translate(0px, 0.35em) }
+}
+
+/* flex-wrap for line-breaking in Chromium */
+math {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+math > mrow {
+  padding: 0.5ex 0ex;
+}
+
+/* Avoid flex-wrap in Firefox */
+@-moz-document url-prefix() {
+  math { display: inline; }
+  math > mrow { padding: 0 }
+}
+
+/* AMS environment auto-numbering via CSS counter. */
+.tml-eqn::before {
+  counter-increment: tmlEqnNo;
+  content: "(" counter(tmlEqnNo) ")";
+}
+
+body {
+  counter-reset: tmlEqnNo;
+}
 /* This is an arbitrary CSS string added to the bundle */
 /*!
  * LaTeX.css (https://latex.vercel.app/)
@@ -1019,15 +1423,41 @@ abbr {
 
 		<main id="skip">
 			
-<h1 id="tagged-python">Tagged “python”</h1>
+<h1 id="how-the-site-is-built">How the Site is Built</h1>
 
+<ul class="post-metadata">
+	<li><time datetime="2025-01-06">06 January 2025</time></li>
+	<li><a href="/tags/site/" class="post-tag">site</a></li>
+</ul>
 
-
-<ol reversed="" class="postlist">
+<p>I’m truly grateful to all the generous developers whose open source software makes this site possible. They certainly deserve acknowledgment as well as other forms of support. And since some readers might be curious to learn the reasons behind my choices, a brief post on the site’s construction seemed appropriate. When I began to contemplate a new blog, there were really only two requirements, and they both seemed fairly simple:</p>
+<ol>
+<li>No JavaScript in the browser.</li>
+<li>Nicely rendered mathematics.</li>
 </ol>
+<p>It turns out that those requirements aren’t so trivial after all. The two major math rendering libraries are both designed to run as JavaScript in the browser. In theory, both can also execute in a <code>node.js</code> environment during the build process, but that approach introduces significant complexity and compromises. Furthermore, the output formats seem to be limited to unattractive <abbr>SVG</abbr> graphics or a Rube Goldberg combination of <abbr>HTML,</abbr> web components, and <abbr>CSS.</abbr></p>
+<p>Fortunately, modern browsers have pretty good support for <a href="https://www.w3.org/Math/">MathML</a> and there are tools that generate MathML from LaTeX input. So it’s possible to write mathematics in the format familiar to most mathematical authors:</p>
+<pre class="language-latex" tabindex="0"><code class="language-latex"><span class="token function selector">\def</span><span class="token function selector">\d</span><span class="token punctuation">{</span><span class="token function selector">\mathrm</span><span class="token punctuation">{</span>d<span class="token punctuation">}</span><span class="token punctuation">}</span>
 
-
-<p>See <a href="/tags/">all tags</a>.</p>
+<span class="token function selector">\oint</span>_C <span class="token function selector">\vec</span><span class="token punctuation">{</span>B<span class="token punctuation">}</span><span class="token function selector">\circ</span> <span class="token function selector">\d</span><span class="token function selector">\vec</span><span class="token punctuation">{</span>l<span class="token punctuation">}</span> = <span class="token function selector">\mu</span>_0
+<span class="token function selector">\left</span>(
+  I_<span class="token punctuation">{</span><span class="token function selector">\text</span><span class="token punctuation">{</span>enc<span class="token punctuation">}</span><span class="token punctuation">}</span> +
+    <span class="token function selector">\varepsilon</span>_0
+    <span class="token function selector">\frac</span><span class="token punctuation">{</span><span class="token function selector">\d</span><span class="token punctuation">}</span><span class="token punctuation">{</span><span class="token function selector">\d</span> t<span class="token punctuation">}</span>
+    <span class="token function selector">\int</span>_S <span class="token punctuation">{</span><span class="token function selector">\vec</span><span class="token punctuation">{</span>E<span class="token punctuation">}</span> <span class="token function selector">\circ</span> <span class="token function selector">\hat</span><span class="token punctuation">{</span>n<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token function selector">\;</span> <span class="token function selector">\d</span> a
+<span class="token function selector">\right</span>)</code></pre>
+<p>And have it appear as a nice equation whose styling perfectly matches other content on the site:</p>
+<p class="tml-block"><math display="block" class="tml-display" style="display:block math;"><mrow><msub><mo movablelimits="false">∮</mo><mi>C</mi></msub><mover><mi>B</mi><mo stretchy="false" style="transform:scale(0.75) translate(10%, 30%);">→</mo></mover><mo>∘</mo><mrow><mi mathvariant="normal">d</mi></mrow><mover><mi>l</mi><mo stretchy="false" style="transform:scale(0.75) translate(10%, 30%);">→</mo></mover><mo>=</mo><msub><mi>μ</mi><mn>0</mn></msub><mrow><mo fence="true" form="prefix">(</mo><msub><mi>I</mi><mtext>enc</mtext></msub><mo>+</mo><msub><mi>ε</mi><mn>0</mn></msub><mfrac><mrow><mi mathvariant="normal">d</mi></mrow><mrow><mrow><mi mathvariant="normal">d</mi></mrow><mi>t</mi></mrow></mfrac><msub><mo movablelimits="false">∫</mo><mi>S</mi></msub><mrow><mover><mi>E</mi><mo stretchy="false" style="transform:scale(0.75) translate(10%, 30%);">→</mo></mover><mo>∘</mo><mover><mi>n</mi><mo stretchy="false" class="tml-xshift" style="math-style:normal;math-depth:0;">^</mo></mover></mrow><mspace width="0.2778em"></mspace><mrow><mi mathvariant="normal">d</mi></mrow><mi>a</mi><mo fence="true" form="postfix">)</mo></mrow></mrow></math></p>
+<p>With a solution for mathematical content, putting everything together was pretty straightforward. There are plenty of static site generating applications, but Eleventy looked like a good fit for me. It provides easy control over the <abbr>HTML</abbr> and <abbr>CSS</abbr> that ultimately make up the site, and it’s implemented in language (JavaScript) and environment (<code>node.js</code>) with which I have a lot of familiarity. I’ve tried to keep other dependencies to a minimum, so most of the functionality is built into Eleventy. The site does rely on a few extensions, however, As of this writing, the applications, libraries, and tools that produce this site include:</p>
+<ul>
+<li>Static site generator: <a href="https://www.11ty.dev">Eleventy</a>.</li>
+<li>Math rendering: Ron Kok’s <a href="https://temml.org"><abbr>TEMML</abbr></a> via Trae Blain’s <a href="https://github.com/traeblain/markdown-it-temml">plugin</a>.</li>
+<li>Additional markdown plugins for <a href="https://github.com/markdown-it/markdown-it-sub">subscripts</a>, <a href="https://github.com/markdown-it/markdown-it-sup">superscripts</a>, and, from Martin Ring, <a href="https://github.com/martinring/markdown-it-table-captions">table captions</a>.</li>
+<li>Theme: Adopted from Vincent Dörig’s awesome <a href="https://latex.vercel.app"><abbr>LATEX</abbr>.css</a>.</li>
+<li>Fonts: Latin Modern families from <a href="https://www.gust.org.pl/projects/e-foundry/latin-modern"><abbr>GUST</abbr></a>.</li>
+<li>Icons: <a href="https://fonts.google.com/icons">Material Icons</a>, brand icons, and custom.</li>
+</ul>
+<p>For the writing process itself the <a href="https://typora.io">typora</a> editor from appmakes deserves a special acknowledgment. I’ve been using it since the early beta releases, and it was the primary writing tool for my last book, my PhD thesis, and various academic papers.</p>
 
 
 		</main>
@@ -1087,7 +1517,7 @@ abbr {
 			</nav>
 		</footer>
 
-		<!-- This page `/tags/python/` was built on 2025-01-06T00:13:27.739Z -->
+		<!-- This page `/blog/site/` was built on 2025-01-06T00:13:27.726Z -->
 		
 	</body>
 </html>

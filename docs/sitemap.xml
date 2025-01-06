@@ -17,12 +17,17 @@
 	</url>
 	
 	<url>
-		<loc>https://sathomas.me/feed/feed.xml</loc>
-		<lastmod>2024-12-31</lastmod>
+		<loc>https://sathomas.me/blog/hello/</loc>
+		<lastmod>2025-01-01</lastmod>
 	</url>
 	
 	<url>
-		<loc>https://sathomas.me/blog/hello/</loc>
-		<lastmod>2025-01-01</lastmod>
+		<loc>https://sathomas.me/blog/site/</loc>
+		<lastmod>2025-01-06</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://sathomas.me/feed/feed.xml</loc>
+		<lastmod>2025-01-06</lastmod>
 	</url>
 </urlset>
