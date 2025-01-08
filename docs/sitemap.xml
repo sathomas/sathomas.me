@@ -30,24 +30,4 @@
 		<loc>https://sathomas.me/feed/feed.xml</loc>
 		<lastmod>2025-01-08</lastmod>
 	</url>
-	
-	<url>
-		<loc>https://sathomas.me/blog/darkmode/</loc>
-		<lastmod>2025-01-13</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://sathomas.me/blog/statamodels/</loc>
-		<lastmod>2025-01-20</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://sathomas.me/blog/robuststats/</loc>
-		<lastmod>2025-01-27</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://sathomas.me/blog/morerobusttats/morerobuststats/</loc>
-		<lastmod>2025-02-03</lastmod>
-	</url>
 </urlset>
