@@ -28,6 +28,11 @@
 	
 	<url>
 		<loc>https://sathomas.me/feed/feed.xml</loc>
-		<lastmod>2025-01-08</lastmod>
+		<lastmod>2025-01-12</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://sathomas.me/blog/darkmode/</loc>
+		<lastmod>2025-01-13</lastmod>
 	</url>
 </urlset>

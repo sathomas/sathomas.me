@@ -5,11 +5,42 @@
   <subtitle>Musing about mathematics, biology, and other stuff.</subtitle>
   <link href="https://sathomas.me/feed/feed.xml" rel="self" />
   <link href="https://sathomas.me/" />
-  <updated>2025-01-06T00:00:00Z</updated>
+  <updated>2025-01-13T00:00:00Z</updated>
   <id>https://sathomas.me/</id>
   <author>
     <name>Stephen Thomas</name>
   </author>
+  <entry>
+    <title>Dark Mode Support</title>
+    <link href="https://sathomas.me/blog/darkmode/" />
+    <updated>2025-01-13T00:00:00Z</updated>
+    <id>https://sathomas.me/blog/darkmode/</id>
+    <content type="html">&lt;p&gt;Those of you who read at night may have noticed that this site has a dark mode. Pages follow the lead of your web browser. When your browser switches to dark mode, they change with it. Or, at least, most pages do. This particular page works differently. There is a button in its upper right corner that manually sets light or dark mode. That button gives you direct control over the mode. This page is an exception because it discusses the site’s dark mode implementation, and I thought it would be helpful to let you directly compare the two styles.&lt;/p&gt;
+&lt;p&gt;The code that governs the mode is pretty simple, though it does rely on relatively recent features in the relevant web standards. The main control is a hidden checkbox that’s toggled &lt;em&gt;on&lt;/em&gt; and &lt;em&gt;off&lt;/em&gt; by the button:&lt;/p&gt;
+&lt;pre class=&quot;language-html&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-html&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;input&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;dark-mode&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;checkbox&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;dark-mode&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;hidden&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;true&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;/&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;label&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation attr-equals&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;dark-mode&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;&amp;lt;!-- svg icon here --&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;label&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;abbr&gt;CSS&lt;/abbr&gt; styles change based on the state of that checkbox.&lt;/p&gt;
+&lt;pre class=&quot;language-css&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-css&quot;&gt;&lt;span class=&quot;token selector&quot;&gt;html:has(#dark-mode:checked)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;/* style changes for dark mode */&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Most of the changes are straightforward: the background becomes dark gray and the text color changes to off-white, for example. To reduce the blinding effect of images, their brightness is reduced with a filter.&lt;/p&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://sathomas.me/blog/darkmode/-96QZsSthy-1520.avif 1520w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://sathomas.me/blog/darkmode/-96QZsSthy-1520.webp 1520w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://sathomas.me/blog/darkmode/-96QZsSthy-1520.jpeg&quot; alt=&quot;NCATS biologist Michele Ceribelli, Ph.D., prepares samples for a high-throughput flow cytometry analysis in a 384 well plate.&quot; width=&quot;1520&quot; height=&quot;1013&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;figcaption&gt;&lt;abbr&gt;NCATS&lt;/abbr&gt; biologist Michele Ceribelli, Ph.D., prepares samples for a high-throughput flow cytometry analysis in a 384 well plate. Credit: Daniel Soñé Photography, &lt;abbr&gt;LLC&lt;/abbr&gt;. (&lt;a src=&quot;https://www.flickr.com/photos/64860478@N05/37821508295/in/photostream/&quot;&gt;Public Domain&lt;/a&gt;.)&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Charts and plots provide more control and flexibility, so they have optimized light &lt;em&gt;and&lt;/em&gt; dark mode versions using different chart styles. The web page includes both images, but only one is visible at a time. Switching to and from dark mode changes which image becomes visible.&lt;/p&gt;
+&lt;figure&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://sathomas.me/blog/darkmode/p_LE7tE55Y-1520.avif 1520w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://sathomas.me/blog/darkmode/p_LE7tE55Y-1520.webp 1520w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://sathomas.me/blog/darkmode/p_LE7tE55Y-1520.png&quot; alt=&quot;Sample chart in light mode&quot; width=&quot;1520&quot; height=&quot;944&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;p&gt;&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://sathomas.me/blog/darkmode/iOvc3c5Iu1-1520.avif 1520w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://sathomas.me/blog/darkmode/iOvc3c5Iu1-1520.webp 1520w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://sathomas.me/blog/darkmode/iOvc3c5Iu1-1520.png&quot; alt=&quot;Sample chart in dark mode&quot; width=&quot;1520&quot; height=&quot;944&quot;&gt;&lt;/picture&gt;&lt;/p&gt;
+&lt;figcaption&gt;Sample chart to illustrate the differences between light and dark mode.&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Since this page lets you manually switch modes, you might ask why every page doesn’t offer that option. Unfortunately, any practical implementation requires JavaScript or cookies, and this site has neither.&lt;label for=&quot;sn-1&quot; class=&quot;sidenote-toggle sidenote-number&quot;&gt;&lt;/label&gt;
+&lt;input type=&quot;checkbox&quot; id=&quot;sn-1&quot; class=&quot;sidenote-toggle&quot;&gt;
+&lt;span class=&quot;sidenote&quot;&gt;This constraint not only keeps the site’s implementation simple, it also ensures that you, as a reader, have complete privacy. There is no way I can track your behavior on the site.&lt;/span&gt; The problem is persistence. It is possible to manually change the mode on any given page (such as this one), but there is no way to remember that preference and share it with other pages. So you could manually set dark mode on a particular page, but as soon as you navigated to a different page on the site, you would be confonted with light mode again. That would be frustrating and annoying, so I’ve stuck with what’s possible. Regular pages simply reflect the browser’s setting.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>How the Site is Built</title>
     <link href="https://sathomas.me/blog/site/" />

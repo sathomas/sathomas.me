@@ -3,16 +3,420 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Tagged &#39;statistics&#39;</title>
+		<title>Dark Mode Support</title>
 		<link rel="icon" href="/favicon.ico" sizes="32x32">
 		<link rel="icon" href="/icon.svg" type="image/svg+xml">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-		<meta name="description" content="Miscellaneous musings of a quantitative biologist and software engineer.">
+		<meta name="description" content="How dark mode works on this sige">
 		<link rel="alternate" href="feed/feed.xml" type="application/atom+xml" title="Stephen Thomas">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="generator" content="Eleventy v3.0.0">
 		
-		<style>.postlist { counter-reset: start-from 1 }
+		<style>/*!
+ * LaTeX prism.css (https://latex.vercel.app/#syntax-highlighting)
+ * Based on the default prism.js theme for JavaScript, CSS and HTML by Lea Verou
+ *
+ * Source: https://github.com/vincentdoerig/latex-css/tree/master/prism
+ * Licensed under MIT (https://github.com/vincentdoerig/latex-css/blob/master/LICENSE)
+*/
+
+html {
+  --bg-color: #F0F0F0;
+  --color: black;
+  --token-teal: #407f80;
+  --token-black: #000000;
+  --token-grey: #666666;
+  --token-green: #007f00;
+  --token-lime: #7d8f29;
+  --token-brown: #9a6e3a;
+  --token-red: #ba2121;
+  --token-fuchsia: #dd4a68;
+  --token-orange: #e90;
+  --token-pink: #BA6687;
+}
+
+html:has(#dark-mode:checked) {
+	--bg-color: #2d2d2d;
+	--color: #ccc;
+	--token-teal: #90D0D0;
+	--token-black: #ccc;
+	--token-grey: #999;
+	--token-green: #51B53F;
+	--token-lime: #B4C55D;
+	--token-brown: #D3A26B;
+	--token-red: #FA5E4F;
+	--token-fuchsia: #FF839B;
+	--token-orange: #FFCF4C;
+	--token-pink: #F49BBC;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(:has(#dark-mode)) {
+    --bg-color: #2d2d2d;
+    --color: #ccc;
+    --token-teal: #90D0D0;
+    --token-black: #ccc;
+    --token-grey: #999;
+    --token-green: #51B53F;
+    --token-lime: #B4C55D;
+    --token-brown: #D3A26B;
+    --token-red: #FA5E4F;
+    --token-fuchsia: #FF839B;
+    --token-orange: #FFCF4C;
+    --token-pink: #F49BBC;
+  }
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  color: var(--color);
+  background: none;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+
+/* Code blocks */
+pre[class*='language-'] {
+  padding: 1em;
+  overflow: auto;
+}
+
+pre[class*='language-'] {
+  background: var(--bg-color);
+}
+
+/* Inline code */
+:not(pre) > code[class*='language-'] {
+  padding: 0.1em;
+  border-radius: 0.3em;
+  white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--token-teal);
+}
+
+.token.punctuation,
+.token.constant {
+  color: var(--token-black);
+}
+
+.token.punctuation.attr-equals,
+.token.number,
+.token.operator {
+  color: var(--token-grey);
+}
+
+.token.namespace {
+  opacity: 0.7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.symbol,
+.token.deleted,
+.token.keyword {
+  color: var(--token-green);
+}
+
+.token.selector,
+.token.attr-name,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: var(--token-lime);
+}
+
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: var(--token-brown);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.string,
+.token.attr-value .punctuation:not(.attr-equals) {
+  color: var(--token-red);
+}
+
+.token.class-name {
+  color: var(--token-fuchsia);
+}
+
+.token.important,
+.token.variable {
+  color: var(--token-orange);
+}
+
+.token.regex {
+  color: var(--token-pink);
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+
+@font-face {
+  font-family: 'Temml';
+  src: url('temml.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: 'Latin Modern Math';
+	src: url('/fonts/latinmodern-math.woff2') format('woff2');
+}
+
+math {
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  font-size-adjust: none;
+  text-indent: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  direction: ltr;
+  /* Prevent Firefox from omitting the dot on i or j. */
+  font-feature-settings: "dtls" off;
+}
+
+math * {
+  border-color: currentColor;
+}
+
+math {
+  font-family: "Latin Modern Math", math;
+}
+
+/* Next line is active in Firefox and Safari.
+ * Not in Chromium, which recognizes display: "block math" written inline. */
+math.tml-display { display: block; }
+
+*.mathscr {
+  font-family: "Temml";
+}
+
+/* Chromium prime alignment */
+mo.tml-prime {
+  font-family: Temml;
+}
+
+/* Prevent f' from overlapping in Chromium */
+mo.prime-pad {
+  padding-left: 0.08em;
+}
+
+/* \cancel & \phase use background images. Get them to print. */
+menclose {
+  -webkit-print-color-adjust: exact;  /* Chrome & Edge */
+          print-color-adjust: exact;
+}
+
+/* Array cell justification in Firefox & WebKit */
+.tml-right {
+  text-align: right;
+}
+.tml-left {
+  text-align: left;
+}
+
+/* Styles for Chromium only */
+@supports (not (-webkit-backdrop-filter: blur(1px))) and (not (-moz-appearance: none)) {
+  /* MathML Core & Chromium do not support the MathML 3.0 element <menclose> attributes. */
+  /* So use styles. */
+  menclose {
+    position: relative;
+    padding: 0.5ex 0ex;
+  }
+
+    .tml-overline {
+    padding: 0.1em 0 0 0;
+    border-top: 0.065em solid;
+  }
+
+  .tml-underline {
+    padding: 0 0 0.1em 0;
+    border-bottom: 0.065em solid;
+  }
+
+  .tml-cancel {
+    display: inline-block;
+    position: absolute;
+    left: 0.5px;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: currentColor;
+  }
+  .upstrike {
+    clip-path: polygon(0.05em 100%, 0em calc(100% - 0.05em), calc(100% - 0.05em) 0em, 100% 0.05em);
+  }
+  .downstrike {
+    clip-path: polygon(0em 0.05em, 0.05em 0em, 100% calc(100% - 0.05em), calc(100% - 0.05em) 100%);
+  }
+  .sout {
+    clip-path: polygon(0em calc(55% + 0.0333em), 0em calc(55% - 0.0333em), 100% calc(55% - 0.0333em), 100% calc(55% + 0.0333em));
+  }
+  .tml-xcancel {
+    background: linear-gradient(to top left,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0) calc(50% - 0.06em),
+    rgba(0,0,0,1) 50%,
+    rgba(0,0,0,0) calc(50% + 0.06em),
+    rgba(0,0,0,0) 100%),
+    linear-gradient(to top right,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0) calc(50% - 0.06em),
+    rgba(0,0,0,1) 50%,
+    rgba(0,0,0,0) calc(50% + 0.06em),
+    rgba(0,0,0,0) 100%)
+  }
+
+  .longdiv-top {
+    border-top: 0.067em solid;
+    padding: 0.1em 0.2em 0.2em 0.433em;
+  }
+  .longdiv-arc {
+    position: absolute;
+    top: 0;
+    bottom: 0.1em;
+    left: -0.4em;
+    width: 0.7em;
+    border: 0.067em solid;
+    transform: translateY(-0.067em);
+    border-radius: 70%;
+    clip-path: inset(0 0 0 0.4em);
+    box-sizing: border-box;}
+    .menclose {display: inline-block;
+    text-align: left;
+    position: relative;
+  }
+
+  .phasor-bottom {
+    border-bottom: 0.067em solid;
+    padding: 0.2em 0.2em 0.1em 0.6em;
+  }
+  .phasor-angle {
+    display: inline-block;
+    position: absolute;
+    left: 0.5px;
+    bottom: -0.04em;
+    height: 100%;
+    aspect-ratio: 0.5;
+    background-color: currentColor;
+    clip-path: polygon(0.05em 100%, 0em calc(100% - 0.05em), calc(100% - 0.05em) 0em, 100% 0.05em);
+  }
+
+  .tml-box {
+    padding: 3pt 0 3pt 0;
+    border: 1px solid;
+  }
+  .tml-fbox {
+    padding: 3pt;
+    border: 1px solid;
+  }
+
+  .circle-pad {
+    padding: 0.267em;
+  }
+  .textcircle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border: 0.067em solid;
+    border-radius: 50%;
+   }
+
+   .actuarial {
+    padding: 0.03889em 0.03889em 0 0.03889em;
+    border-width: 0.08em 0.08em 0em 0em;
+    border-style: solid;
+    margin-right: 0.03889em;
+   }
+
+   /* Stretch \widetilde */
+  .tml-crooked-2 {
+    transform: scale(2.0, 1.1)
+  }
+  .tml-crooked-3 {
+    transform: scale(3.0, 1.3)
+  }
+  .tml-crooked-4 {
+    transform: scale(4.0, 1.4)
+  }
+  /* set array cell justification */
+  .tml-right {
+    text-align: -webkit-right;
+  }
+  .tml-left {
+    text-align: -webkit-left;
+  }
+}
+
+/* Adjust WebKit accents */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .tml-xshift { transform: translate(0px, 0.45em) }
+  .tml-capshift { transform: translate(0px, 0.35em) }
+}
+
+/* flex-wrap for line-breaking in Chromium */
+math {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+math > mrow {
+  padding: 0.5ex 0ex;
+}
+
+/* Avoid flex-wrap in Firefox */
+@-moz-document url-prefix() {
+  math { display: inline; }
+  math > mrow { padding: 0 }
+}
+
+/* AMS environment auto-numbering via CSS counter. */
+.tml-eqn::before {
+  counter-increment: tmlEqnNo;
+  content: "(" counter(tmlEqnNo) ")";
+}
+
+body {
+  counter-reset: tmlEqnNo;
+}
 /* This is an arbitrary CSS string added to the bundle */
 /*!
  * LaTeX.css (https://latex.vercel.app/)
@@ -932,20 +1336,64 @@ abbr {
 			</nav>
 			<h2 class="nav-name" id="stephen-thomas">Stephen Thomas</h2>
 			
-			
+			<span class="mode-switch">
+				<input id="dark-mode" type="checkbox" name="dark-mode" hidden="true">
+				<label for="dark-mode">
+					<span class="dark-mode-hide">
+						<span class="icon">
+<svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+  <title>Dark mode</title>
+  <path d="M 90 160 C 70.556 160 54.028 153.194 40.417 139.583 C 26.806 125.972 20 109.444 20 90 C 20 70.556 26.806 54.028 40.417 40.417 C 54.028 26.806 70.556 20 90 20 C 91.815 20 93.597 20.065 95.347 20.194 C 97.097 20.324 98.815 20.519 100.5 20.778 C 95.185 24.537 90.94 29.431 87.764 35.458 C 84.588 41.486 83 48 83 55 C 83 66.667 87.083 76.583 95.25 84.75 C 103.417 92.917 113.333 97 125 97 C 132.13 97 138.676 95.412 144.639 92.236 C 150.602 89.06 155.463 84.815 159.222 79.5 C 159.481 81.185 159.676 82.903 159.806 84.653 C 159.935 86.403 160 88.185 160 90 C 160 109.444 153.194 125.972 139.583 139.583 C 125.972 153.194 109.444 160 90 160 Z M 90 144.444 C 101.407 144.444 111.648 141.301 120.722 135.014 C 129.796 128.727 136.407 120.528 140.556 110.417 C 137.963 111.065 135.37 111.583 132.778 111.972 C 130.185 112.361 127.593 112.556 125 112.556 C 109.056 112.556 95.477 106.949 84.264 95.736 C 73.051 84.523 67.444 70.944 67.444 55 C 67.444 52.407 67.639 49.815 68.028 47.222 C 68.417 44.63 68.935 42.037 69.583 39.444 C 59.472 43.593 51.273 50.204 44.986 59.278 C 38.699 68.352 35.556 78.593 35.556 90 C 35.556 105.037 40.87 117.87 51.5 128.5 C 62.13 139.13 74.963 144.444 90 144.444 Z M 88.056 91.944 Z" fill="currentColor"></path>
+</svg>
+</span>
+					</span>
+					<span class="light-mode-hide">
+						<span class="icon">
+<svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+  <title>Light mode</title>
+  <path d="M 90 109.091 C 95.303 109.091 99.811 107.235 103.523 103.523 C 107.235 99.811 109.091 95.303 109.091 90 C 109.091 84.697 107.235 80.189 103.523 76.477 C 99.811 72.765 95.303 70.909 90 70.909 C 84.697 70.909 80.189 72.765 76.477 76.477 C 72.765 80.189 70.909 84.697 70.909 90 C 70.909 95.303 72.765 99.811 76.477 103.523 C 80.189 107.235 84.697 109.091 90 109.091 Z M 90 121.818 C 81.197 121.818 73.693 118.716 67.489 112.511 C 61.284 106.307 58.182 98.803 58.182 90 C 58.182 81.197 61.284 73.693 67.489 67.489 C 73.693 61.284 81.197 58.182 90 58.182 C 98.803 58.182 106.307 61.284 112.511 67.489 C 118.716 73.693 121.818 81.197 121.818 90 C 121.818 98.803 118.716 106.307 112.511 112.511 C 106.307 118.716 98.803 121.818 90 121.818 Z M 45.455 96.364 L 20 96.364 L 20 83.636 L 45.455 83.636 L 45.455 96.364 Z M 160 96.364 L 134.545 96.364 L 134.545 83.636 L 160 83.636 L 160 96.364 Z M 83.636 45.455 L 83.636 20 L 96.364 20 L 96.364 45.455 L 83.636 45.455 Z M 83.636 160 L 83.636 134.545 L 96.364 134.545 L 96.364 160 L 83.636 160 Z M 54.364 62.955 L 38.295 47.523 L 47.364 38.136 L 62.636 54.045 L 54.364 62.955 Z M 132.636 141.864 L 117.205 125.795 L 125.636 117.045 L 141.705 132.477 L 132.636 141.864 Z M 117.045 54.364 L 132.477 38.295 L 141.864 47.364 L 125.955 62.636 L 117.045 54.364 Z M 38.136 132.636 L 54.205 117.205 L 62.955 125.636 L 47.523 141.705 L 38.136 132.636 Z M 90 90 Z" fill="currentColor"></path>
+</svg>
+</span>
+					</span>
+				</label>
+				
+			</span>
 		</header>
 
 		<main id="skip">
 			
-<h1 id="tagged-statistics">Tagged “statistics”</h1>
+<h1 id="dark-mode-support">Dark Mode Support</h1>
 
+<ul class="post-metadata">
+	<li><time datetime="2025-01-13">13 January 2025</time></li>
+	<li><a href="/tags/site/" class="post-tag">site</a>, </li>
+	<li><a href="/tags/python/" class="post-tag">python</a></li>
+</ul>
 
-
-<ol reversed="" class="postlist">
-</ol>
-
-
-<p>See <a href="/tags/">all tags</a>.</p>
+<p>Those of you who read at night may have noticed that this site has a dark mode. Pages follow the lead of your web browser. When your browser switches to dark mode, they change with it. Or, at least, most pages do. This particular page works differently. There is a button in its upper right corner that manually sets light or dark mode. That button gives you direct control over the mode. This page is an exception because it discusses the site’s dark mode implementation, and I thought it would be helpful to let you directly compare the two styles.</p>
+<p>The code that governs the mode is pretty simple, though it does rely on relatively recent features in the relevant web standards. The main control is a hidden checkbox that’s toggled <em>on</em> and <em>off</em> by the button:</p>
+<pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dark-mode<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>checkbox<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dark-mode<span class="token punctuation">"</span></span> <span class="token attr-name">hidden</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>label</span> <span class="token attr-name">for</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dark-mode<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!-- svg icon here --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">></span></span></code></pre>
+<p>The <abbr>CSS</abbr> styles change based on the state of that checkbox.</p>
+<pre class="language-css" tabindex="0"><code class="language-css"><span class="token selector">html:has(#dark-mode:checked)</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* style changes for dark mode */</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Most of the changes are straightforward: the background becomes dark gray and the text color changes to off-white, for example. To reduce the blinding effect of images, their brightness is reduced with a filter.</p>
+<figure>
+<p><picture><source type="image/avif" srcset="/blog/darkmode/-96QZsSthy-1520.avif 1520w"><source type="image/webp" srcset="/blog/darkmode/-96QZsSthy-1520.webp 1520w"><img loading="lazy" decoding="async" src="/blog/darkmode/-96QZsSthy-1520.jpeg" alt="NCATS biologist Michele Ceribelli, Ph.D., prepares samples for a high-throughput flow cytometry analysis in a 384 well plate." width="1520" height="1013"></picture></p>
+<figcaption><abbr>NCATS</abbr> biologist Michele Ceribelli, Ph.D., prepares samples for a high-throughput flow cytometry analysis in a 384 well plate. Credit: Daniel Soñé Photography, <abbr>LLC</abbr>. (<a src="https://www.flickr.com/photos/64860478@N05/37821508295/in/photostream/">Public Domain</a>.)</figcaption>
+</figure>
+<p>Charts and plots provide more control and flexibility, so they have optimized light <em>and</em> dark mode versions using different chart styles. The web page includes both images, but only one is visible at a time. Switching to and from dark mode changes which image becomes visible.</p>
+<figure>
+<p><picture><source type="image/avif" srcset="/blog/darkmode/p_LE7tE55Y-1520.avif 1520w"><source type="image/webp" srcset="/blog/darkmode/p_LE7tE55Y-1520.webp 1520w"><img loading="lazy" decoding="async" src="/blog/darkmode/p_LE7tE55Y-1520.png" alt="Sample chart in light mode" width="1520" height="944"></picture></p>
+<p><picture><source type="image/avif" srcset="/blog/darkmode/iOvc3c5Iu1-1520.avif 1520w"><source type="image/webp" srcset="/blog/darkmode/iOvc3c5Iu1-1520.webp 1520w"><img loading="lazy" decoding="async" src="/blog/darkmode/iOvc3c5Iu1-1520.png" alt="Sample chart in dark mode" width="1520" height="944"></picture></p>
+<figcaption>Sample chart to illustrate the differences between light and dark mode.</figcaption>
+</figure>
+<p>Since this page lets you manually switch modes, you might ask why every page doesn’t offer that option. Unfortunately, any practical implementation requires JavaScript or cookies, and this site has neither.<label for="sn-1" class="sidenote-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-1" class="sidenote-toggle">
+<span class="sidenote">This constraint not only keeps the site’s implementation simple, it also ensures that you, as a reader, have complete privacy. There is no way I can track your behavior on the site.</span> The problem is persistence. It is possible to manually change the mode on any given page (such as this one), but there is no way to remember that preference and share it with other pages. So you could manually set dark mode on a particular page, but as soon as you navigated to a different page on the site, you would be confonted with light mode again. That would be frustrating and annoying, so I’ve stuck with what’s possible. Regular pages simply reflect the browser’s setting.</p>
 
 
 		</main>
@@ -1005,7 +1453,7 @@ abbr {
 			</nav>
 		</footer>
 
-		<!-- This page `/tags/statistics/` was built on 2025-01-12T17:18:11.386Z -->
+		<!-- This page `/blog/darkmode/` was built on 2025-01-12T17:18:11.371Z -->
 		
 	</body>
 </html>
