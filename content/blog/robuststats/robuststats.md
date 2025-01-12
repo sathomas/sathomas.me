@@ -172,189 +172,32 @@ for mu in [1, 10, 100]:
 
 Table 1 lists the results. As it makes clear, the robust measures consistently provide substantially more accurate estimates of the true population parameters. The results are pretty impressive, but they do come with an important caveat: we’re considering a population represented by the normal distribution. The next post will examine the complications that different distributions introduce.
 
-<table class="col-1-r col-2-r col-3-r col-4-r col-5-r col-6-r">
-  <caption>Comparison of traditional and robust measures for multiple samples from various normal distributions. Each row summarizes 499,500 values randomly sampled from the distribution, combined with 500 values set to <em>μ</em> + 5<em>σ</em>. Note that <abbr>MAD</abbr> is the <em>normalized</em> median absolute deviation.</caption>
-  <thead>
-    <tr>
-      <th><em>μ</em></th>
-      <th>mean</th>
-      <th>median</th>
-      <th><em>σ</em></th>
-      <th>std dev</th>
-      <th><abbr>MAD</abbr></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>1.000383</td>
-      <td>1.000028</td>
-      <td>0.1</td>
-      <td>0.101241</td>
-      <td>0.100256</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1.000605</td>
-      <td>1.000065</td>
-      <td>0.2</td>
-      <td>0.202366</td>
-      <td>0.200352</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1.001843</td>
-      <td>0.999959</td>
-      <td>0.5</td>
-      <td>0.507097</td>
-      <td>0.501442</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1.005748</td>
-      <td>1.003024</td>
-      <td>1.0</td>
-      <td>1.012169</td>
-      <td>0.999266</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1.012409</td>
-      <td>1.006309</td>
-      <td>2.0</td>
-      <td>2.025853</td>
-      <td>2.004507</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1.020550</td>
-      <td>1.006610</td>
-      <td>5.0</td>
-      <td>5.052604</td>
-      <td>5.003562</td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>1.053924</td>
-      <td>1.006006</td>
-      <td>10.0</td>
-      <td>10.110405</td>
-      <td>9.997652</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>10.005786</td>
-      <td>9.999597</td>
-      <td>1.0</td>
-      <td>1.011163</td>
-      <td>1.001487</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>10.010695</td>
-      <td>10.007263</td>
-      <td>2.0</td>
-      <td>2.025043</td>
-      <td>2.004667</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>10.024332</td>
-      <td>10.006425</td>
-      <td>5.0</td>
-      <td>5.058050</td>
-      <td>5.010623</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>10.050436</td>
-      <td>9.998484</td>
-      <td>10.0</td>
-      <td>10.124124</td>
-      <td>10.002446</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>10.054985</td>
-      <td>10.004193</td>
-      <td>20.0</td>
-      <td>20.244190</td>
-      <td>20.037551</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>10.335298</td>
-      <td>10.117630</td>
-      <td>50.0</td>
-      <td>50.564300</td>
-      <td>50.047076</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>10.662132</td>
-      <td>10.121115</td>
-      <td>100.0</td>
-      <td>101.178462</td>
-      <td>100.086371</td>
-    </tr>
-    <tr>
-      <td>100</td>
-      <td>100.048039</td>
-      <td>100.012035</td>
-      <td>10.0</td>
-      <td>10.122126</td>
-      <td>10.040442</td>
-    </tr>
-    <tr>
-      <td>100</td>
-      <td>100.117190</td>
-      <td>100.018728</td>
-      <td>20.0</td>
-      <td>20.228212</td>
-      <td>20.006114</td>
-    </tr>
-    <tr>
-      <td>100</td>
-      <td>100.171905</td>
-      <td>99.988163</td>
-      <td>50.0</td>
-      <td>50.653803</td>
-      <td>50.146970</td>
-    </tr>
-    <tr>
-      <td>100</td>
-      <td>100.610046</td>
-      <td>100.389951</td>
-      <td>100.0</td>
-      <td>101.192734</td>
-      <td>100.270438</td>
-    </tr>
-    <tr>
-      <td>100</td>
-      <td>100.709345</td>
-      <td>100.164250</td>
-      <td>200.0</td>
-      <td>202.234231</td>
-      <td>200.081156</td>
-    </tr>
-    <tr>
-      <td>100</td>
-      <td>102.726667</td>
-      <td>101.292416</td>
-      <td>500.0</td>
-      <td>505.393698</td>
-      <td>499.635618</td>
-    </tr>
-    <tr>
-      <td>100</td>
-      <td>102.912577</td>
-      <td>99.961542</td>
-      <td>1000.0</td>
-      <td>1012.838466</td>
-      <td>1001.865549</td>
-    </tr>
-  </tbody>
-</table>
+: Comparison of traditional and robust measures for multiple samples from various normal distributions. Each row summarizes 499,500 values randomly sampled from a distribution, combined with 500 values set to <em>μ</em> + 5<em>σ</em>. Note that <abbr>MAD</abbr> is the <em>normalized</em> median absolute deviation.
+
+| $\mu$ |    mean |   median | $\sigma$ |      std | <abbr>MAD</abbr> |
+| :---: | ------: | -------: | :------: | -------: | ---------------: |
+|   1   | 1.00038 |  1.00003 |   0.1    | 0.101241 |         0.100256 |
+|   1   |  1.0006 |  1.00006 |   0.2    | 0.202366 |         0.200352 |
+|   1   | 1.00184 | 0.999959 |   0.5    | 0.507097 |         0.501442 |
+|   1   | 1.00575 |  1.00302 |    1     |  1.01217 |         0.999266 |
+|   1   | 1.01241 |  1.00631 |    2     |  2.02585 |          2.00451 |
+|   1   | 1.02055 |  1.00661 |    5     |   5.0526 |          5.00356 |
+|   1   | 1.05392 |  1.00601 |    10    |  10.1104 |          9.99765 |
+|  10   | 10.0058 |   9.9996 |    1     |  1.01116 |          1.00149 |
+|  10   | 10.0107 |  10.0073 |    2     |  2.02504 |          2.00467 |
+|  10   | 10.0243 |  10.0064 |    5     |  5.05805 |          5.01062 |
+|  10   | 10.0504 |  9.99848 |    10    |  10.1241 |          10.0024 |
+|  10   |  10.055 |  10.0042 |    20    |  20.2442 |          20.0376 |
+|  10   | 10.3353 |  10.1176 |    50    |  50.5643 |          50.0471 |
+|  10   | 10.6621 |  10.1211 |   100    |  101.178 |          100.086 |
+|  100  | 100.048 |  100.012 |    10    |  10.1221 |          10.0404 |
+|  100  | 100.117 |  100.019 |    20    |  20.2282 |          20.0061 |
+|  100  | 100.172 |  99.9882 |    50    |  50.6538 |           50.147 |
+|  100  |  100.61 |   100.39 |   100    |  101.193 |           100.27 |
+|  100  | 100.709 |  100.164 |   200    |  202.234 |          200.081 |
+|  100  | 102.727 |  101.292 |   500    |  505.394 |          499.636 |
+|  100  | 102.913 |  99.9615 |   1000   |  1012.84 |          1001.87 |
+
 
 ## Colophon
 
