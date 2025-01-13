@@ -38,19 +38,23 @@ The calculations become a bit more complicated when we consider asymmetric distr
 ### Exponential Distribution
 
 Consider the exponential distribution with a rate $\lambda$. Such a distribution is defined by the probability density function (<abbr>PDF</abbr>) of equation 1.
+
 $$
 f(x) = \begin{cases}
 \lambda e^{-\lambda x} & x\geq 0,\\
 0 & x<0.
 \end{cases}
 $$
+
 Even though it’s often easier to think about probabilities based on the <abbr>PDF</abbr>, it turns out that cummulative density function (<abbr>CDF</abbr>) is more convenient for our purposes. The <abbr>CDF</abbr> at a value $x$ defines the total probability for all values up $x$; it is 0 at $-\infty$ and 1 at $+\infty$. The exponential distribution’s <abbr>CDF</abbr> is defined by equation 2.
+
 $$
 F(x) = \begin{cases}
 1 - e^{-\lambda x} & x\geq 0,\\
 0 & x<0.
 \end{cases}
 $$
+
 Given that definition, the median is the value of $x$ which accounts for half of the total probability. Solving $F(x) = 0.5$ tells us that the median is $\mathrm{ln}(2)/\lambda$. And since the mean of an exponential distribution is $1/\lambda$, we have our first scaling constant.
 
 - “robust mean” = $1/\mathrm{ln}(2) \ \cdot$ median
@@ -68,6 +72,7 @@ To find a scaling constant for the standard deviation, we need an expression for
 </figure>
 
 To find the <abbr>MAD</abbr>’s value, we solve for it using the <abbr>CDF</abbr>; Equation 3 shows the steps. That equation uses $m$ to represent the median, and, as we found above, it is equal to $\mathrm{ln}(2)/\lambda$. The last step relies on the definition of the hyperbolic sine function.
+
 $$
 \begin{aligned}
 0.5 &= F(m + {\small \mathrm{MAD}}) - F(m - {\small \mathrm{MAD}}) \\
@@ -80,6 +85,7 @@ $$
     &= \mathrm{sinh}(\lambda \cdot {\small \mathrm{MAD}})
 \end{aligned}
 $$
+
 Now we know the <abbr>MAD</abbr> for the exponential distribution is $(1/\lambda) \mathrm{arcsin}(0.5)$. And since the distribution’s standard deviation is $(1/\lambda)$, a constant scaling factor exists.
 
 - “robust standard deviation” = $1/\mathrm{archsinh}(0.5) \ \cdot$ <abbr>MAD</abbr>
@@ -140,9 +146,11 @@ Finding the expected median of a log-normal distribution is simple enough. Recal
 Of course, when we’re analyzing a sample data set, we probably don’t know the value of $\sigma$ for the log-normal population from which the sample came. If we knew the true values of the log-normal parameters, there would be little point in estimating from a sample. We can, however, calculate robust estimates for those parameters from our sample. Since $\mu$ and $\sigma$ represent the mean and standard deviation of the underlying _normal_ distribution, we can transform our log-normal sample into a normal sample and use the approach from the previous post to calculate those estimates.
 
 For a robust standard deviation, we can use the same approach as we did for the exponential distribution. First we need to find the expected value of the log-normal median absolute deviation. It’s the value for <abbr>MAD</abbr> that satisfies equation 4.
+
 $$
 0.5 = F(e^\mu + {\small \mathrm{MAD}}) - F(e^\mu - {\small \mathrm{MAD}}) \\
 $$
+
 Unfortunately the cummulative distribution function for the log-normal distribution is rather complicated, and there is no known analytic solution for <abbr>MAD</abbr>. We have to resort to numerical methods, but at least there is convenient initial guess for the solution: we simply calculate the unscaled <abbr>MAD</abbr> from our sample. Dividing the log-normal standard deviation<label for="sn-1" class="sidenote-toggle sidenote-number"></label>
 <input type="checkbox" id="sn-1" class="sidenote-toggle" />
 <span class="sidenote">$\sigma^2 = \left( e^{\sigma^2} - 1 \right) \left( e^{2\mu + \sigma^2} \right)$</span> by the numerial value for <abbr>MAD</abbr> gives us the scaling factor.
@@ -212,32 +220,32 @@ for mu in [-10, -1, 0, 1, 10]:
 
 Table 2 lists the results. By now you won’t be surprised to see that the robust measures provide better estimates of the true values, in some cases substantially better estimates.
 
-: Comparison of traditional and robust measures for multiple samples from various log-normal distributions. Each row summarizes 499,500 values randomly sampled from a distribution, combined with 500 outliers. The first two columns show the distribution parameters. The remaining columns show the “true” values, the traditional estimates, and the robust estimates for the mean and standard deviation. ×10^-5^
+: Comparison of traditional and robust measures for multiple samples from various log-normal distributions. Each row summarizes 499,500 values randomly sampled from a distribution, combined with 500 outliers. The first two columns show the distribution parameters. The remaining columns show the “true” values, the traditional estimates, and the robust estimates for the mean and standard deviation.
 
-| $\mu$ | $\sigma$ | true mean | estimated mean | robust mean |  true SD | estimated SD | robust SD |
-| ----: | -------: | --------: | -------------: | ----------: | -------: | -----------: | --------: |
-|   -10 |      0.1 |  4.56×10^-5^ |       4.57×10^-5^ |    4.56×10^-5^ | 4.57×10^-6^ |     4.67×10^-6^ |  4.59×10^-6^ |
-|   -10 |        1 |  7.49×10^-5^ |       8.13×10^-5^ |    7.50×10^-5^ | 9.81×10^-5^ |     2.32×10^-4^ |  9.86×10^-5^ |
-|   -10 |        2 |  3.36×10^-4^ |       1.34×10^-3^ |    3.39×10^-4^ | 2.46×10^-3^ |     3.17×10^-2^ |  2.51×10^-2^ |
-|   -10 |        4 |     0.135 |           22.1 |       0.135 |      403 |          696 |       399 |
-|    -1 |      0.1 |     0.370 |          0.370 |       0.370 |   0.0371 |       0.0378 |    0.0371 |
-|    -1 |        1 |     0.607 |          0.659 |       0.608 |    0.796 |         1.88 |     0.798 |
-|    -1 |        2 |      2.72 |           10.8 |        2.72 |     19.9 |          257 |      19.9 |
-|    -1 |        4 |      1100 |        179,000 |        1120 | 3.27×10^6^ |     5.64×10^6^ |  3.42×10^6^ |
-|     0 |      0.1 |      1.01 |           1.01 |        1.01 |    0.101 |        0.103 |     0.101 |
-|     0 |        1 |      1.65 |           1.80 |        1.66 |     2.16 |         5.12 |      2.18 |
-|     0 |        2 |      7.39 |           29.4 |        7.39 |     54.1 |          699 |      54.2 |
-|     0 |        4 |      2980 |        487,000 |        3070 | 8.89×10^6^ |     1.53×10^7^ |  9.44×10^6^ |
-|     1 |      0.1 |      2.73 |           2.73 |        2.73 |    0.274 |        0.279 |     0.274 |
-|     1 |        1 |      4.48 |           4.89 |        4.49 |     5.87 |         13.9 |      5.89 |
-|     1 |        2 |      20.1 |           80.0 |        20.5 |      147 |         1900 |       153 |
-|     1 |        4 |      8100 |       1.32×10^6^ |        8170 | 2.42×10^7^ |     4.17×10^7^ |  2.45×10^7^ |
-|    10 |      0.1 |    22,100 |         22,100 |      22,100 |     2220 |         2270 |      2220 |
-|    10 |        1 |    36,300 |         40,000 |      36,600 |   47,600 |      112,000 |    48,200 |
-|    10 |        2 |   163,000 |        647,000 |     163,000 | 1.19×10^6^ |     1.54×10^7^ |  1.20×10^6^ |
-|    10 |        4 |  6.57×10^7^ |       1.07e+10 |    6.56×10^7^ | 1.96×10^11^ |     3.38×10^11^ |  1.93×10^11^ |
+| $\mu$ | $\sigma$ |   true mean | estimated mean | robust mean |     true SD | estimated SD |   robust SD |
+| ----: | -------: | ----------: | -------------: | ----------: | ----------: | -----------: | ----------: |
+|   -10 |      0.1 | 4.56×10^-5^ |    4.57×10^-5^ | 4.56×10^-5^ | 4.57×10^-6^ |  4.67×10^-6^ | 4.59×10^-6^ |
+|   -10 |        1 | 7.49×10^-5^ |    8.13×10^-5^ | 7.50×10^-5^ | 9.81×10^-5^ |  2.32×10^-4^ | 9.86×10^-5^ |
+|   -10 |        2 | 3.36×10^-4^ |    1.34×10^-3^ | 3.39×10^-4^ | 2.46×10^-3^ |  3.17×10^-2^ | 2.51×10^-2^ |
+|   -10 |        4 |       0.135 |           22.1 |       0.135 |         403 |          696 |         399 |
+|    -1 |      0.1 |       0.370 |          0.370 |       0.370 |      0.0371 |       0.0378 |      0.0371 |
+|    -1 |        1 |       0.607 |          0.659 |       0.608 |       0.796 |         1.88 |       0.798 |
+|    -1 |        2 |        2.72 |           10.8 |        2.72 |        19.9 |          257 |        19.9 |
+|    -1 |        4 |        1100 |        179,000 |        1120 |  3.27×10^6^ |   5.64×10^6^ |  3.42×10^6^ |
+|     0 |      0.1 |        1.01 |           1.01 |        1.01 |       0.101 |        0.103 |       0.101 |
+|     0 |        1 |        1.65 |           1.80 |        1.66 |        2.16 |         5.12 |        2.18 |
+|     0 |        2 |        7.39 |           29.4 |        7.39 |        54.1 |          699 |        54.2 |
+|     0 |        4 |        2980 |        487,000 |        3070 |  8.89×10^6^ |   1.53×10^7^ |  9.44×10^6^ |
+|     1 |      0.1 |        2.73 |           2.73 |        2.73 |       0.274 |        0.279 |       0.274 |
+|     1 |        1 |        4.48 |           4.89 |        4.49 |        5.87 |         13.9 |        5.89 |
+|     1 |        2 |        20.1 |           80.0 |        20.5 |         147 |         1900 |         153 |
+|     1 |        4 |        8100 |     1.32×10^6^ |        8170 |  2.42×10^7^ |   4.17×10^7^ |  2.45×10^7^ |
+|    10 |      0.1 |      22,100 |         22,100 |      22,100 |        2220 |         2270 |        2220 |
+|    10 |        1 |      36,300 |         40,000 |      36,600 |      47,600 |      112,000 |      48,200 |
+|    10 |        2 |     163,000 |        647,000 |     163,000 |  1.19×10^6^ |   1.54×10^7^ |  1.20×10^6^ |
+|    10 |        4 |  6.57×10^7^ |       1.07e+10 |  6.56×10^7^ | 1.96×10^11^ |  3.38×10^11^ | 1.93×10^11^ |
 
-## Coliphon
+## Colophon
 
 Figure 1 was created with the following code:
 
