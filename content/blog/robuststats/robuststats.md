@@ -69,7 +69,7 @@ median = np.median(newgroup)
 mad = stats.median_abs_deviation(newgroup)
 ```
 
-The median net worth increases to \$194,147 and the <abbr>MAD</abbr> to $15,246; neither changes much from its original value. With only those measures to go on, we would still conclude that our group mostly consists of typical members of the population. And this time our inference is correct.
+The median net worth increases to \$194,147 and the <abbr>MAD</abbr> to \$15,246; neither changes much from its original value. With only those measures to go on, we would still conclude that our group mostly consists of typical members of the population. And this time our inference is correct.
 
 ## Relating Robust Measures to Traditional Measures
 
@@ -86,9 +86,11 @@ In many cases the mean/median relationship is trivial: they’re often the same.
 <figcaption>The probability density function (<abbr>PDF</abbr>) of the normal distribution shows that the mean lies exactly in the middle; that is exactly the definition of the <em>median,</em> and for this distribution, the two measures have the same expected value.</figcaption></figure>
 
 The situation is more complicated for the <abbr>MAD</abbr> and the standard deviation. That’s clear in our example, as the population standard deviation was \$25,000 while the sample <abbr>MAD</abbr> of the original group was only \$14,845. You can’t directly compare those numbers. It turns out, however, that all we need is a constant scaling factor to make the two values comparable. Let’s find that scaling factor. Remember that the <abbr>MAD</abbr> is defined as the median of absolute deviations. We’ve already seen that the median equals the mean, $\mu$.:
+
 $$
 \small{\text{MAD}}(X) = \text{median}(\left| X_i - \text{median}(X) \right|) = \text{median}(\left| X_i - \mu) \right|)
 $$
+
 The symmetry of the normal distribution helps here as well. Notice that the absolute deviations can be split into two groups: (1) the deviation for values greater than the mean, $X_i - \mu$, and (2) the deviation for values less than the mean, $\mu - X_i$. But, as figure 2 shows, those two groups have the same absolute deviations; for every point that’s greater than the mean, there is an equivalent point less than the mean with the same absolute deviation. And since each group has the same absolute deviations, each group will also have the same median value for those absolute deviations. Deriving the median for one of the groups is enough to tell us the <abbr>MAD</abbr> of the entire distribution.
 
 <figure>
@@ -113,7 +115,7 @@ Just like the median is the point exactly in the middle of the probability densi
 
 </figure>
 
-One we see where the median deviation is located, it’s easy to calculate. The value, in this case net worth, is the 75th percentile value for our distribution. And the median absolute deviation is the difference between that value and the median value or the population mean. In our example the expected value for the <abbr>MAD</abbr> is $16,862,
+One we see where the median deviation is located, it’s easy to calculate. The value, in this case net worth, is the 75th percentile value for our distribution. And the median absolute deviation is the difference between that value and the median value or the population mean. In our example the expected value for the <abbr>MAD</abbr> is \$16,862,
 
 ```python
 percentile75 = population.ppf(0.75)
@@ -121,13 +123,16 @@ mad = percentile75 - population_mean
 ```
 
 The same approach works for any normal distribution. The expected value of the median is the population mean, and the expected value of the <abbr>MAD</abbr> is the difference between the 75th percentile and the mean.
+
 $$
 \begin{aligned}
 \text{median}\left[X \sim N(\mu,\sigma)\right] &= \mu \\
 \small{\text{MAD}}\left[X \sim N(\mu,\sigma)\right] &= \text{P}_{0.75}(X) - \mu
 \end{aligned}
 $$
+
 To make the relationship between <abbr>MAD</abbr> and $\sigma$ more concrete, use the formula for percentile values of the normal distribution. It depends on both $\mu$ and $\sigma$ as well as values of the probit function $\Phi^{-1}$. Equation 3 shows the results: the expected value of <abbr>MAD</abbr> is linearly proportional to the standard deviation, and the scaling constant is $\Phi^{-1}(0.75)$.
+
 $$
 \begin{aligned}
 \small{\text{MAD}}\left[X \sim N(\mu,\sigma)\right] &= \text{P}_{0.75}(X) - \mu \\
@@ -137,9 +142,11 @@ $$
 \sigma &= \dfrac{\small{\text{MAD}}}{\Phi^{-1}(0.75)}
 \end{aligned}
 $$
+
 No simple expression exists for the probit funtion $\Phi^{-1}(p)$ in general, but its value at 0.75 can be computed analytically and is approximately 0.67449. If we measure the <abbr>MAD</abbr> of a sample from a normally distributed population, we can expect the population’s standard deviation to equal that measurement divided by 0.67449. This value is sometimes called the _normalized median absolute deviation,_ and it serves as a robust version of the standard deviation for normal distributions. Some programming libraries (e.g. [R stats](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/mad)) even employ this scaling by default when computing the median absolute deviation.
 
 Now we have a way to provide robust descriptive statistics that are directly comparable to to traditional measures, at least for normally distributed populations:
+
 $$
 \begin{aligned}
 \mu &\sim \text{median} \\
