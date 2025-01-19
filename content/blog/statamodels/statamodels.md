@@ -1,14 +1,13 @@
 ---
-title: Modeling with Stata
-description: A simple example demonstrating various model approaches available in Stata
+title: Arbitrary Statistical Models
+description: A simple example demonstrating various modeling approaches available in Stata
 date: 2025-01-20
-draft: true
 tags: [software, stata, statistics, bayes]
 ---
 
-As a last “warm up” post, I’ll share some notes on using the [Stata](https://www.stata.com) application for general statistical modeling. It might be the only time stata code appears on the blog since most of my programming relies on other environments. But Stata is a really handy application for quickly analyzing data. In the vast majority of cases it’s possible to perform an analysis only with the graphical user interface, so there’s no need to learn (or remember) yet another language syntax. To make it more convenient, Stata also saves every <abbr>GUI</abbr> interaction as a command, so you can reliably reproduce your results later. And, of course, as first class statisical software, it is substantially more powerful than general purpose applications such as Excel.
+This post might be the only time [Stata](https://www.stata.com) code appears on the blog. Most of the software I share here will be written in a freely available language such as Python. But I’ve had these notes tucked away for awhile, and someone else may find them useful. Even long-time Stata users might be unaware of its versatility for developing arbitrary statistical models. We can see that flexibility by analyzing the same data set using non-linear regression, maximum likelihood estimation, and Bayesian analysis.
 
-A practice I hope to perpetuate in this blog is including all the code for each post, not just snippets. That not only helps readers reproduce the results, but it ensures that _I_ can reproduce them as well. Here is the initialization code that I typically use for all Stata scripts<label for="sn-1" class="sidenote-toggle sidenote-number"></label>
+Here is the initialization code that I typically use for all Stata scripts<label for="sn-1" class="sidenote-toggle sidenote-number"></label>
 <input type="checkbox" id="sn-1" class="sidenote-toggle" />
 <span class="sidenote">Experienced Stata users will note that I do not follow the normal convention of abbreviating commands and options. I find code much less confusing when they are spelled out in full.</span>. The `version` command is one of my favorites. It directs Stata to execute the remainder of the script as if it were the specified Stata version. In this case I’m using version 18. In the future when newer Stata versions are available, this command will tell the application not to use updated versions of alogrithms and equations. This feature is a big help for reproducibility.
 
@@ -20,7 +19,7 @@ capture log close   // close any pending logs
 set seed 123456789  // consistent random number generation
 ```
 
-For all of the analysis we’ll reuse a commonly cited [example](https://chjackson.github.io/openbugsdoc/Examples/Dugongs.html) from the now-retired OpenBUGS software. The data are length and age measurements for 27 captured dugongs (sea cows)<label for="sn-2" class="sidenote-toggle sidenote-number"></label>
+For this analysis I’ll reuse a commonly cited [example](https://chjackson.github.io/openbugsdoc/Examples/Dugongs.html) from the now-retired OpenBUGS software. The data are length and age measurements for 27 captured dugongs (sea cows)<label for="sn-2" class="sidenote-toggle sidenote-number"></label>
 <input type="checkbox" id="sn-2" class="sidenote-toggle" />
 <span class="sidenote">Ratkowsky, David A.. _Nonlinear Regression Modeling: A Unified Practical Approach._ Switzerland, M. Dekker, 1983.</span>. Carlin and Gelfand (1991)<label for="sn-3" class="sidenote-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="sidenote-toggle" /><span class="sidenote">Carlin, B. P., and A. E. Gelfand. “An iterative Monte Carlo method for nonconjugate Bayesian analysis.” _Statistics and Computing,_ vol. 1, no. 2, Dec. 1991, pp. 119–28. Scopus, doi:10.1007/BF01889986.</span> model the data from this example using a simple nonlinear growth curve that increases rapidly at early ages and tends to an asymptote as the age increases. In simple form, $y = \alpha - \beta \cdot \lambda^x$, where $y$ starts at $\alpha - \beta$ when $x = 0$ and, provided $\lambda < 1$, asymptotically approaches $\alpha$. Equation 1 describes the model more formally; in particular we assume that any errors in the data are normally distributed with zero mean and an unknown standard deviation.
 $$
@@ -59,12 +58,12 @@ data {
 
 : Parameter estimates from Stan
 
-|        | Mean  | MCSE       | StdDev | 5%    | 50%   | 95%  |
-| ------ | ----- | ---------- | ------ | ----- | ----- | ---- |
-| alpha  | 2.7   | 3.5×10^-3^ | 0.069  | 2.6   | 2.6   | 2.8  |
-| beta   | 0.97  | 3.2×10^-3^ | 0.072  | 0.85  | 0.97  | 1.1  |
-| lambda | 0.86  | 1.6×10^-3^ | 0.031  | 0.81  | 0.87  | 0.91 |
-| Sigma  | 0.099 | 7.2×10^-4^ | 0.015  | 0.078 | 0.097 | 0.12 |
+|        | Mean  | <abbr>MCSE</abbr> | StdDev | 5%    | 50%   | 95%  |
+| ------ | ----- | ----------------- | ------ | ----- | ----- | ---- |
+| alpha  | 2.7   | 3.5×10^-3^        | 0.069  | 2.6   | 2.6   | 2.8  |
+| beta   | 0.97  | 3.2×10^-3^        | 0.072  | 0.85  | 0.97  | 1.1  |
+| lambda | 0.86  | 1.6×10^-3^        | 0.031  | 0.81  | 0.87  | 0.91 |
+| Sigma  | 0.099 | 7.2×10^-4^        | 0.015  | 0.078 | 0.097 | 0.12 |
 
 Now we can turn to Stata. For reproducibility I’ll show the full data set as it’s loaded into Stata.
 
@@ -112,7 +111,7 @@ local lamda = 0.9
 
 ## Non-Linear Least Squares
 
-A simple approach for finding parameter values is non-linear least squares with Stata’s `nl` command. It makes assumptions that are not always appropriate (e.g. errors are normally distributed) but even when those assumptions don’t hold, the approach may be helpful as a first step. The `nl` results can provide good initial values and, e.g., estimates for the error variance. The simplest way to use `nl` is with expressions.
+A simple approach for finding parameter values is non-linear least squares with Stata’s `nl` command. It makes assumptions that are not always appropriate (e.g. errors are normally distributed) but even when those assumptions don’t hold, the approach may be helpful as a first step. The `nl` results can provide good initial values and, potential estimates for the error variance. The simplest way to use `nl` is with expressions.
 
 ```stata
 nl (y = {alpha} - {beta} * {lamda} ^ x), ///
@@ -120,9 +119,9 @@ nl (y = {alpha} - {beta} * {lamda} ^ x), ///
     nolog
 ```
 
-Although not necessary for this example, more complicated models may be implemented as "programs."
+Although not necessary for this example, more complicated models may be implemented as “programs.”
 
-Stata requires programs used for non-linear least squares to have a name that starts with "nl". That prefix is then omitted when the program is referenced in the actual `nl` command.
+Stata requires programs used for non-linear least squares to have a name that starts with “nl.” That prefix is then omitted when the program is referenced in the actual `nl` command.
 
 ```stata
 capture program drop nlgrowth
@@ -174,7 +173,7 @@ bayesmh y = ({alpha} - {beta} * {lamda} ^ x), ///
     initial({alpha} `alpha' {beta} `beta' {lamda} `lamda' {var} `sigma'^2)
 ```
 
-For more complicated models, we can use a custom "program evaluator." We can use a log-likelihood evaluator instead of a log-posterior evaluator because we're okay using built-in distributions as priors for the parameters.
+For more complicated models, we can use a custom “program evaluator.” A log-likelihood evaluator is simpler than a log-posterior evaluator because we're okay using built-in distributions as priors for the parameters.
 
 Our model has no linear combinations for the independent variable $x$, so ideally we would just define a constraint that fixed the slope. Currently the `bayesmh` command doesn't allow constraints with program evaluators, though. To work around that and avoid any spurious warnings for variables that we don't use, we pass `x` as an extra variable instead. Here’s a program evaluator for our example.
 
@@ -238,7 +237,7 @@ local sigma_bs = e(mean)[1, "sigma"]
 local mcmc_samples = e(mcmcsize)
 ```
 
-With the Bayesian approach, Stata lets us perform more extensive analyses. To do that, we can load the posterior data in a separate data frame. The resulting dataset will contain the parameter values realized in the MCMC chains. With a small bit of housekeeping, we can randomly sample from those posterior values. The final results include these samples as a way to visualize our model’s uncertainty as a Bayesian alternative to confidence intervals.
+With the Bayesian approach, Stata lets us perform more extensive analyses. To do that, we can load the posterior data in a separate data frame. The resulting dataset will contain the parameter values realized in the <abbr>MCMC</abbr> chains. With a small bit of housekeeping, we can randomly sample from those posterior values. The final results include these samples as a way to visualize our model’s uncertainty as a Bayesian alternative to confidence intervals.
 
 ```stata
 tempname posterior
@@ -271,7 +270,7 @@ quietly predictnl pred_ml = (_b[/alpha] - _b[/beta] * _b[/lamda] ^ x), ///
     ci(low_ml high_ml)
 ```
 
-More complex problems may benefit from a complete "program."  To demonstrate that, we use the linear form for the maximum likelihood estimation, so this program is a "method-lf evaluator." Method-lf evaluators are required to evaluate the observation-by-observation log likelihood `ln(Lj), j = 1, …, N` where the subscript `j` indexes the observations. Because the model doesn't have any parameters that create linear functions of $x$ (i.e. no scale or location) we constrain the linear coefficient to be 1. We'll also force the constant term to be zero when we execute the `ml` command.
+More complex problems may benefit from a complete “program.”  To demonstrate that, we use the linear form for the maximum likelihood estimation, so this program is a “method-lf evaluator.” Method-lf evaluators are required to evaluate the observation-by-observation log likelihood `ln(Lj), j = 1, …, N` where the subscript `j` indexes the observations. Because the model doesn't have any parameters that create linear functions of $x$ (i.e. no scale or location) we constrain the linear coefficient to be 1. We'll also force the constant term to be zero when we execute the `ml` command.
 
 ```stata
 constraint define 1 [xb]:x = 1
