@@ -85,7 +85,7 @@ In many cases the mean/median relationship is trivial: they’re often the same.
 
 <figcaption>The probability density function (<abbr>PDF</abbr>) of the normal distribution shows that the mean lies exactly in the middle; that is exactly the definition of the <em>median,</em> and for this distribution, the two measures have the same expected value.</figcaption></figure>
 
-The situation is more complicated for the <abbr>MAD</abbr> and the standard deviation. That’s clear in our example, as the population standard deviation was \$25,000 while the sample <abbr>MAD</abbr> of the original group was only \$14,845. You can’t directly compare those numbers. It turns out, however, that all we need is a constant scaling factor to make the two values comparable. Let’s find that scaling factor. Remember that the <abbr>MAD</abbr> is defined as the median of absolute deviations. We’ve already seen that the median equals the mean, $\mu$.:
+The situation is more complicated for the <abbr>MAD</abbr> and the standard deviation. That’s clear in our example, as the population standard deviation was \$25,000 while the sample <abbr>MAD</abbr> of the original group was only \$14,845. You can’t directly compare those numbers. It turns out, however, that all we need is a constant scaling factor to make the two values comparable. Let’s find that scaling factor. Remember that the <abbr>MAD</abbr> is defined as the median of absolute deviations. We’ve already seen that the median equals the mean, $\mu$.
 
 $$
 \small{\text{MAD}}(X) = \text{median}(\left| X_i - \text{median}(X) \right|) = \text{median}(\left| X_i - \mu) \right|)
@@ -177,7 +177,7 @@ for mu in [1, 10, 100]:
         })
 ```
 
-Table 1 lists the results. As it makes clear, the robust measures consistently provide substantially more accurate estimates of the true population parameters. The results are pretty impressive, but they do come with an important caveat: we’re considering a population represented by the normal distribution. The next post will examine the complications that different distributions introduce.
+Table 1 lists the results. As it makes clear, the robust measures consistently provide substantially more accurate estimates of the true population parameters.
 
 : Comparison of traditional and robust measures for multiple samples from various normal distributions. Each row summarizes 499,500 values randomly sampled from a distribution, combined with 500 values set to <em>μ</em> + 5<em>σ</em>. Note that <abbr>MAD</abbr> is the <em>normalized</em> median absolute deviation.
 
@@ -205,6 +205,25 @@ Table 1 lists the results. As it makes clear, the robust measures consistently p
 |  100  | 102.727 |  101.292 |   500    |  505.394 |          499.636 |
 |  100  | 102.913 |  99.9615 |   1000   |  1012.84 |          1001.87 |
 
+We can also visualize the performance differences between estimators. Figure 4 looks at 500,000 random samples from a standard normal population ($\mu$ = 0, $\sigma$ = 1). The data set in each panel is contaminated with an increasing number of outliers. The plots compare three probability density functions:
+
+1. The true <abbr>PDF</abbr> of the population.
+2. The <abbr>PDF</abbr> based on traditional estimates of the population parameters.
+3. The <abbr>PDF</abbr> based on robust estimates of the population.
+
+One again, the robust measures more accurately reflect the true population.
+
+<figure>
+
+![Plots comparing the true PDF to estimated PDFs using both traditional and robust estimates for various numbers of outliers](pdflight.png)
+
+![Plots comparing the true PDF to estimated PDFs using both traditional and robust estimates for various numbers of outliers](pdfdark.png)
+
+<figcaption>The true <abbr>PDF</abbr> of a normal distribution compared with estimated <abbr>PDF</abbr>s based on traditional and robust measures. Plots derived from sampled data sets consisting of 500,000 random samples corrupted with an increasing number of outliers.</figcaption>
+
+</figure>
+
+These results are pretty impressive, but they do come with an important caveat: we’re considering a population represented by the normal distribution. The next post will examine the complications that different distributions introduce.
 
 ## Colophon
 
@@ -412,6 +431,62 @@ if plottype == "topmedian":
         xytext=(x1,y),
         arrowprops=dict(facecolor=textcolor, arrowstyle="<->")
     )
+
+plt.show()
+```
+
+The code below was used to create figure 4.
+
+```python
+np.random.seed(42)
+
+x = np.linspace(-4, 4, 1000)
+
+fig, axs = plt.subplots(3, 3, figsize=(7.88, 5), tight_layout=True)
+
+for index, num_outliers in enumerate([0, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000]):
+
+    sample = np.random.normal(loc=0, scale=1, size=500000)
+    sample[0:num_outliers] = [5] * num_outliers # replace some samples with outliers
+    mean = np.mean(sample)
+    median = np.median(sample)
+    std = np.std(sample)
+    mad = stats.median_abs_deviation(sample, scale="normal")
+    
+    pdf = stats.norm(0, 1).pdf
+    est_pdf = stats.norm(mean, std).pdf
+    robust_pdf = stats.norm(median, mad).pdf
+
+    ax = axs[index // 3, index % 3]
+
+    ax.plot(x, pdf(x), label="Population")
+    ax.plot(x, robust_pdf(x), label="Robust Estimate")
+    ax.plot(x, est_pdf(x), label="Traditional Estimate")
+    ax.tick_params(
+        axis="x",
+        which="both",
+        top=False,
+        bottom=False,
+        labelbottom=False,
+    )
+    ax.tick_params(
+        axis="y",
+        which="both",
+        left=False,
+        right=False,
+        labelleft=False,
+    )
+    ax.text(
+        0.0125,
+        0.975,
+        f'{num_outliers:,} Outliers',
+        transform=ax.transAxes,
+        verticalalignment="top",
+        horizontalalignment="left",
+        fontsize=10
+    )
+    if (index == 0):
+        ax.legend(fontsize=5)
 
 plt.show()
 ```
