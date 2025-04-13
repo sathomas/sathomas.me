@@ -1,7 +1,7 @@
 ---
 title: More Robust Statistics
 description: Robust statistics for other distributions
-date: 2025-02-03
+date: 2025-05-03
 draft: true
 tags: [statistics, python]
 ---

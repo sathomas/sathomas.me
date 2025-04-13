@@ -1,18 +1,17 @@
 ---
 title: Robust Statistics
 description: Describing data with outliers
-date: 2025-01-27
-draft: true
+date: 2025-04-14
 tags: [statistics, python]
 ---
 
-Most folks reading this blog probably understand something about _mean_ and _standard deviation._ Both are statistical measures that summarize a collection of numerical data. The mean tells us the “average” value of the data, and the standard deviation measures how much the data values vary from that average. But despite their widespread use, mean and standard deviation can sometimes mislead. Data sets with outliers or extreme values, for example, result in statistical measurements that may not reflect the true characteristics of the population. In those cases, alternative measures based on robust statistics provide more helpful summary statistics.
+Even if you’ve forgotten everything else about statistics, mean and standard deviation are probably familiar. Both measures describe important characteristics of a numerical data set. The mean gives us a sense of the “average” or “typical” value of the data, and the standard deviation tells us how widely values vary from that average. Sometimes, however, those two measures don’t work as well as we would like. If a data set has been contaminated with even a few outliers, for example, both the mean and the standard deviation can be misleading. And in those cases, robust statistics provide alternatives that may better describe the data. In this article, we’ll look at a concrete example of the problems with traditional measures, we’ll see how robust statistics solve those problems, and we’ll consider ways to relate robust measures with traditional ones.
 
-## The Problem with Mean and Standard Deviation
+## Mean and Standard Deviation are Sensitive to Outliers
 
-To undestand how mean and standard deviation can fall short, we can consider a simple example. Imagine a population of people whose net worth follows a normal distribution with a mean of \$200,000 and a standard deviation of \$25,000<label for="sn-1" class="sidenote-toggle sidenote-number"></label>
+To see how mean and standard deviation can fall short, consider this simple example: Imagine a population of people whose net worth follows a normal distribution with a mean of \$200,000 and a standard deviation of \$25,000<label for="sn-1" class="sidenote-toggle sidenote-number"></label>
 <input type="checkbox" id="sn-1" class="sidenote-toggle" />
-<span class="sidenote">Although the distribution of net worth in the United States is far from a normal distribution, its median value in 2023 was about \$200,000 according to the Federal Reserve's <a src="https://www.federalreserve.gov/econres/scfindex.htm">Survey of Consumer Finance</a>. So this imaginary population at least bears a superficial resemblence to the <abbr>US</abbr> population.</span>. Let’s pick fifty random inviduals from this population and describe our sample using statistics:
+<span class="sidenote">Although the distribution of net worth in the United States is far from a normal distribution, its median value in 2023 was about \$200,000 according to the Federal Reserve's <a src="https://www.federalreserve.gov/econres/scfindex.htm">Survey of Consumer Finance</a>. So this imaginary population at least bears a superficial resemblence to the <abbr>US</abbr> population.</span>. Pick fifty random inviduals from this population, and describe that sample using statistics. We can simulate that experiment in software.
 
 ```python
 import numpy as np
@@ -27,9 +26,9 @@ mean = np.mean(group)
 stdev = np.std(group)
 ```
 
-The mean net worth of the sample is about \$194,000 and its standard deviation is about \$23,000; both values are consistent with the population as a whole. If these measures were the only information you knew about a group of fifty people, you would have no reason to doubt that the group’s members were typical folks from the population.
+The mean net worth of this sample is about \$194,000, and its standard deviation is about \$23,000. Both of these values are consistent with the whole population. If those measures were the only information you had about a group of fifty people, you would have no reason to doubt that the group’s members were typical folks from the population.
 
-Now imagine that a single billionaire joins the group.
+Now imagine that a single billionaire joins the group. How does that addition affect these measures?
 
 ```python
 newgroup = np.append(group, 1000000000)
@@ -37,13 +36,31 @@ mean = np.mean(newgroup)
 stdev = np.std(newgroup)
 ```
 
-The group’s mean net worth has now grown to nearly \$20 million with a standard deviation of over \$138 million. Now the group looks like a gathering of multi-millionaires; hardly typical folks from the population. But we know that 50 out of the 51 people in the group really are regular, unremarkable representatives of that population. In this case the common descriptive statistics could lead us to infer something about the population that is not actually the case.
+The group’s mean net worth has now grown to nearly \$20 million! This new group looks like a gathering of multi-millionaires, not at all typical of the general population. The group’s standard deviation, now over \$138 million, also differs substantially from the population’s \$23 thousand. Based solely on the mean and standard deviation, we would never suspect that there is nothing special about 50 of the group’s 51 members. The traditional measures could mislead us to the wrong conclusion.
 
-## Accommodating Outliers with Robust Measures
+## Robust Measures Limit the Effects of Outliers
 
-As this example shows, extreme values or outliers can distort the common descriptive statistical measurements. If we want to avoid that distortion, we can use different measurements, ones that fall under the general category of “robust statistics.” Statisticians have defined several different robust statistical measures; we’ll focus on two common ones: the _median_ and the _median absolute deviation_ (<abbr>MAD</abbr>).
+If we suspect that a data set contains outliers that don’t represent the population, we may want to limit the effects of those extreme values in our analysis. Robust statistics are one way to do that. The robust alternatives to the mean and standard deviation are the _median_ and the _median absolute deviation_ (<abbr>MAD</abbr>). Here is what those measures say about our example. First, consider the original 50 folks without the billionaire.
 
-Like the mean, the median is a relatively familiar statistical concept. To calculate it, we arrange our data in order and pick the value exactly in the middle. Once we have the median, we calculate the <abbr>MAD</abbr> by first calculating the absolute value of the difference between each data value and that median, and then we find the median of the result. Here’s a simple example:
+```python
+from scipy import stats
+
+median = np.median(group)
+mad = stats.median_abs_deviation(group, scale="normal")
+```
+
+The median net worth of our original group is \$194,146 and its <abbr>MAD</abbr><label for="sn-2" class="sidenote-toggle sidenote-number"></label>
+<input type="checkbox" id="sn-2" class="sidenote-toggle" />
+<span class="sidenote">More precisely, the code example calculates the normalized <abbr>MAD</abbr>, which corresponds to the standard deviation for normally-distributed populations. We’ll look at that in more detail below.</span> is \$22,009. Those measures reasonably reflect the characteristics of the entire population with its mean of \$200,000 and standard deviation of \$25,000. But what happens when the billionaire arrives?
+
+```python
+median = np.median(newgroup)
+mad = stats.median_abs_deviation(newgroup)
+```
+
+The median net worth only increases to \$194,147, and the new <abbr>MAD</abbr> is \$22,604. One outlier doesn’t change the measures much at all, and, by those values, the new group still reflects the general population.
+
+Calculating these robust measures is straightforward. For the median, arrange the data in order and pick the value exactly in the middle. Once the median is known, determine the <abbr>MAD</abbr> by first calculating the absolute values of the differences between each data value and the median, and then find the median of the result. That’s probably easier to understand with an example:
 
 1. Data set: `[3, 1, 10, 5, 7]`
 2. Data set in order:  `[1, 3, 5, 7, 10]`
@@ -53,29 +70,19 @@ Like the mean, the median is a relatively familiar statistical concept. To calcu
 6. Absolute deviations in order: `[0, 2, 2, 4, 5]`
 7. Median absolute deviation is central (third) value: `2`
 
-Let’s see what these new measures say about our group of people.
+## Sometimes Robust Measures can Match Traditional Measures 
 
-```python
-from scipy import stats
+In the example above, we were able to compare the sample’s median and <abbr>MAD</abbr> (194,000 and 22,600) to the population’s mean and standard deviation (200,000 and 25,000). The result suggested that the sample was indeed from the population. To make this comparison, however, we had to rely on an extra calculation that note 2 hints at: we had to normalize the <abbr>MAD</abbr>. It’s not shown in the procedure shown above, so let’s add it now.
 
-median = np.median(group)
-mad = stats.median_abs_deviation(group)
-```
+8. Optionally, and if possible, scale the median and/or the <abbr>MAD</abbr>
 
-The median net worth of our original group is \$194,146 and its <abbr>MAD</abbr> is \$14,845, both values are representative of the whole population. What happens when we include the billionaire?
+To scale a robust measure, we multiply its raw value by a scaling factor. This additional multiplication makes the robust measure directly comparable with its non-robust equivalent. In our example, the raw <abbr>MAD</abbr> for the original group is 14,845. That’s not very close to the population’s standard deviation of 25,000 or the sample’s standard deviation of 23,107. It’s when we multiply that raw value by 1.4826 that we get the normalized <abbr>MAD</abbr> of 22,009 which we can compare to both. 
 
-```python
-median = np.median(newgroup)
-mad = stats.median_abs_deviation(newgroup)
-```
+There are two important qualifiers in step 8. The first is “optionally.” It’s not always necessary that robust measures correspond to traditional ones. Unscaled robust measures are a perfectly legitimate way to describe data. Nonetheless, mean and standard deviation are more common, so scaling robust measures to match traditional ones can make an analysis easier to understand and appreciate, especially by folks unfamiliar with robust statistics. The second qualifier adds a warning though: that’s not always possible. You can scale robust measures for some data, but nor for all data. It depends on the probability distribution of the underlying population. Our example follows a normal distribution, and the normal distribution supports scaling. That’s all we’ll consider in this post, but a follow up will look at other distributions where things get tricky.
 
-The median net worth increases to \$194,147 and the <abbr>MAD</abbr> to \$15,246; neither changes much from its original value. With only those measures to go on, we would still conclude that our group mostly consists of typical members of the population. And this time our inference is correct.
+The mathematics behind the scaling of robust statistics are not super complicated. Even so, I find the process easier to understand visually, so that’s the approach I’ll use here. In a few graphs we can see how scaling works and, in particular, how to derive the magic value of 1.4826.
 
-## Relating Robust Measures to Traditional Measures
-
-When we describe data with robust statistics, we might keep in mind that robust measures may not be as familiar as mean and standard deviation. Sometimes we can fix that by adjusting the robust measures. For example, we may be able to scale the median absolute deviation so that a given  <abbr>MAD</abbr> value represents the same variation as a standard deviation. That makes <abbr>MAD</abbr> directly comparable to the standard deviation. To make these adjustments we need to know the relationship between expected values of robust and traditional measures. In an entire population, what is the relationship between mean and median and between standard deviation and <abbr>MAD</abbr>?
-
-In many cases the mean/median relationship is trivial: they’re often the same. This is true whenever the distribution is symmetric about the mean, including for the normal distribution we’ve been using in our example. You can see that graphically in figure 1, which plots the probability density for our example population. Half of the density lies below the mean and half lies above it, so the mean must be exactly in the middle. Of course, the “middle” is, by definition, the median. So in this case we can consider the median to be the “robust mean.”
+In many cases, including our example, the mean/median relationship is trivial: they’re the same. This is true whenever the distribution is symmetric about the mean, including for the normal distribution we’ve been using in our example. You can see that graphically in figure 1, which plots the probability density for our example population. Half of the density lies below the mean and half lies above it, so the mean must be exactly in the middle. Of course, the “middle” is, by definition, the median. So in this case we can consider the median to be the “robust mean.”
 
 <figure>
 
@@ -85,7 +92,7 @@ In many cases the mean/median relationship is trivial: they’re often the same.
 
 <figcaption>The probability density function (<abbr>PDF</abbr>) of the normal distribution shows that the mean lies exactly in the middle; that is exactly the definition of the <em>median,</em> and for this distribution, the two measures have the same expected value.</figcaption></figure>
 
-The situation is more complicated for the <abbr>MAD</abbr> and the standard deviation. That’s clear in our example, as the population standard deviation was \$25,000 while the sample <abbr>MAD</abbr> of the original group was only \$14,845. You can’t directly compare those numbers. It turns out, however, that all we need is a constant scaling factor to make the two values comparable. Let’s find that scaling factor. Remember that the <abbr>MAD</abbr> is defined as the median of absolute deviations. We’ve already seen that the median equals the mean, $\mu$.
+The situation is more complicated for the <abbr>MAD</abbr> and the standard deviation. They’re clearly not equal, even in our example, as the population standard deviation was \$25,000 while the sample <abbr>MAD</abbr> of the original group was only \$14,845. You can’t directly compare those numbers. It turns out, however, that all we need is a constant scaling factor to make the two values comparable. Let’s find that scaling factor. Remember that the <abbr>MAD</abbr> is defined as the median of absolute deviations. We’ve already seen that the median equals the mean, $\mu$.
 
 $$
 \small{\text{MAD}}(X) = \text{median}(\left| X_i - \text{median}(X) \right|) = \text{median}(\left| X_i - \mu) \right|)
@@ -143,7 +150,7 @@ $$
 \end{aligned}
 $$
 
-No simple expression exists for the probit funtion $\Phi^{-1}(p)$ in general, but its value at 0.75 can be computed analytically and is approximately 0.67449. If we measure the <abbr>MAD</abbr> of a sample from a normally distributed population, we can expect the population’s standard deviation to equal that measurement divided by 0.67449. This value is sometimes called the _normalized median absolute deviation,_ and it serves as a robust version of the standard deviation for normal distributions. Some programming libraries (e.g. [R stats](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/mad)) even employ this scaling by default when computing the median absolute deviation.
+No simple expression exists for the probit funtion $\Phi^{-1}(p)$ in general, but its value at 0.75 can be computed analytically and is approximately 0.67449. If we measure the <abbr>MAD</abbr> of a sample from a normally distributed population, we can expect the population’s standard deviation to equal that measurement divided by 0.67449. This value is sometimes called the _normalized median absolute deviation,_ and it serves as a robust version of the standard deviation for normal distributions. Some programming libraries (e.g. [R stats](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/mad)) even employ this scaling by default when computing the median absolute deviation; they’re assuming, by default, that the population is normal.
 
 Now we have a way to provide robust descriptive statistics that are directly comparable to to traditional measures, at least for normally distributed populations:
 
@@ -154,7 +161,7 @@ $$
 \end{aligned}
 $$
 
-## Evaluating the Results
+## Robust Measures can be Effective with Many Outliers
 
 Now that we have a way to calculate robust versions of the mean and standard deviation, we can see how well those measures resist outliers. Recall that our original group was sampled from a normal distribution with $\mu = 200{,}000$ and $\sigma = 25{,}000$, and we added one outlier to that group. The mean and standard deviation of the new group were nearly 20,000,000 and 138,000,000, respectively. Those measures aren’t even close to the distribution parameters. The robust measures, however, reflect the population quite nicely: 194,000 and 22,600 for the “robust mean” and “robust standard deviation”. At least for our initial example, robust statistics provide a better description of the underlying population when the sample includes outliers.
 
